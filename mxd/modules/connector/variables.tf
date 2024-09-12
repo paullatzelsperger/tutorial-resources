@@ -54,9 +54,6 @@ variable "database-credentials" {
 
 variable "ssi-config" {
   default = {
-    miw-url            = ""
-    miw-authorityId    = ""
-    oauth-tokenUrl     = ""
     oauth-clientid     = ""
     oauth-clientsecret = ""
     oauth-secretalias  = ""

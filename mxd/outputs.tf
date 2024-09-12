@@ -33,16 +33,8 @@ output "connector2-client-secret" {
   value = module.bob-connector.client_secret
 }
 
-output "keycloak-cluster-ip" {
-  value = kubernetes_service.keycloak.spec.0.cluster_ip
-}
-
 output "keycloak-database-credentials" {
   value = local.keycloak-postgres
-}
-
-output "miw-cluster-ip" {
-  value = local.miw-ip
 }
 
 output "miw-database-credentials" {

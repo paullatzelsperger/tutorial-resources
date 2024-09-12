@@ -93,7 +93,7 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
 locals {
   control-plane-service = "${var.humanReadableName}-tractusx-connector-controlplane"
   data-plane-service    = "${var.humanReadableName}-tractusx-connector-dataplane"
-  management_url        = "http://${var.ingress-host}/${var.humanReadableName}/management/v2"
+  management_url        = "http://${var.ingress-host}/${var.humanReadableName}/management/v3"
   proxy_url             = "http://${var.ingress-host}/${var.humanReadableName}/proxy"
   health_url            = "http://${var.ingress-host}/${var.humanReadableName}/health"
   public_url            = "http://${var.ingress-host}/${var.humanReadableName}/api/public"

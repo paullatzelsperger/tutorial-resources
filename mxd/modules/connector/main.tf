@@ -18,14 +18,14 @@
 #
 
 module "minio" {
-  source            = "../minio"
+  source         = "../minio"
   humanReadableName = lower(var.humanReadableName)
-  minio-username    = var.minio-config.minio-username
-  minio-password    = var.minio-config.minio-password
+  minio-username = var.minio-config.minio-username
+  minio-password = var.minio-config.minio-password
 }
 
 resource "helm_release" "connector" {
-  name              = lower(var.humanReadableName)
+  name = lower(var.humanReadableName)
   force_update      = true
   dependency_update = true
   reuse_values      = true
@@ -34,7 +34,7 @@ resource "helm_release" "connector" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "tractusx-connector"
-  version    = "0.6.0"
+  version    = "0.8.0-rc2"
 
   values = [
     file("${path.module}/values.yaml"),
@@ -62,6 +62,18 @@ resource "helm_release" "connector" {
       }
     }),
     yamlencode({
+      iatp : {
+        id : "did:web:changeme"
+        sts : {
+          oauth : {
+            token_url : "https://changeme.org"
+            client : {
+              id : "test-client-id"
+              secret_alias : "test-alias"
+            }
+          }
+        }
+      }
       controlplane : {
         env : {
           "TX_SSI_ENDPOINT_AUDIENCE" : "http://${kubernetes_service.controlplane-service.metadata.0.name}:8084/api/v1/dsp"
@@ -71,21 +83,21 @@ resource "helm_release" "connector" {
           "EDC_DATAPLANE_SELECTOR_DEFAULTPLANE_SOURCETYPES" : "HttpData,AmazonS3,AzureStorage"
           "EDC_DATAPLANE_SELECTOR_DEFAULTPLANE_DESTINATIONTYPES" : "HttpProxy,AmazonS3,AzureStorage"
         }
-        ssi : {
-          miw : {
-            url : var.ssi-config.miw-url
-            authorityId : var.ssi-config.miw-authorityId
-          }
-          oauth : {
-            tokenurl : var.ssi-config.oauth-tokenUrl
-            client : {
-              id : var.ssi-config.oauth-clientid
-              secretAlias : var.ssi-config.oauth-secretalias
-            }
+        bdrs : {
+          server : {
+            url : "https://bdrs.test.org"
           }
         }
       }
       dataplane : {
+        token : {
+          signer : {
+            privatekey_alias : "key-1"
+          }
+          verifier : {
+            publickey_alias : "key-1"
+          }
+        }
         env : {
           "EDC_BLOBSTORE_ENDPOINT_TEMPLATE" : local.edc-blobstore-endpoint-template
         }
@@ -145,10 +157,10 @@ resource "tls_private_key" "transfer_proxy_privatekey" {
 }
 
 locals {
-  aes_key_b64                     = base64encode(random_string.aes_key_raw.result)
-  client_secret                   = base64encode(random_string.kc_client_secret.result)
+  aes_key_b64 = base64encode(random_string.aes_key_raw.result)
+  client_secret = base64encode(random_string.kc_client_secret.result)
   jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
-  azure-sas-token                 = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
+  azure-sas-token = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
   minio-url                       = module.minio.minio-url
 }
