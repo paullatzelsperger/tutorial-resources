@@ -52,12 +52,26 @@ variable "database-credentials" {
   }
 }
 
-variable "ssi-config" {
+variable "dcp-config" {
+  type = object({
+    id                     = string
+    sts_token_url          = string
+    sts_client_id          = string
+    sts_clientsecret_alias = string
+  })
   default = {
-    oauth-clientid     = ""
-    oauth-clientsecret = ""
-    oauth-secretalias  = ""
+    id                     = ""
+    sts_token_url          = ""
+    sts_client_id          = ""
+    sts_clientsecret_alias = ""
   }
+}
+
+variable "dataplane" {
+  type = object({
+    privatekey-alias = string
+    publickey-alias  = string
+  })
 }
 
 variable "azure-account-name" {

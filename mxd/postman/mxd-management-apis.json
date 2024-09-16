@@ -238,12 +238,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/policydefinitions",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"policydefinitions"
 					]
 				}
@@ -256,12 +256,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/{{POLICY_ID}}",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/policydefinitions/{{POLICY_ID}}",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"policydefinitions",
 						"{{POLICY_ID}}"
 					]
@@ -275,12 +275,12 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/request",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/policydefinitions/request",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"policydefinitions",
 						"request"
 					]
@@ -294,12 +294,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/policydefinitions/{{POLICY_ID}}",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/policydefinitions/{{POLICY_ID}}",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"policydefinitions",
 						"{{POLICY_ID}}"
 					]
@@ -322,12 +322,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/contractdefinitions",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractdefinitions"
 					]
 				}
@@ -340,12 +340,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/{{CONTRACT_DEFINITION_ID}}",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/contractdefinitions/{{CONTRACT_DEFINITION_ID}}",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractdefinitions",
 						"{{CONTRACT_DEFINITION_ID}}"
 					]
@@ -359,12 +359,12 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/request",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/contractdefinitions/request",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractdefinitions",
 						"request"
 					]
@@ -378,12 +378,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v2/contractdefinitions/{{CONTRACT_DEFINITION_ID}}",
+					"raw": "{{PROVIDER_MANAGEMENT_URL}}/v3/contractdefinitions/{{CONTRACT_DEFINITION_ID}}",
 					"host": [
 						"{{PROVIDER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractdefinitions",
 						"{{CONTRACT_DEFINITION_ID}}"
 					]
@@ -425,12 +425,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/catalog/request",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/catalog/request",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"catalog",
 						"request"
 					]
@@ -477,12 +477,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/contractnegotiations",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractnegotiations"
 					]
 				}
@@ -521,12 +521,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations/{{NEGOTIATION_ID}}",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/contractnegotiations/{{NEGOTIATION_ID}}",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractnegotiations",
 						"{{NEGOTIATION_ID}}"
 					]
@@ -560,12 +560,12 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations/request",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/contractnegotiations/request",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractnegotiations",
 						"request"
 					]
@@ -599,12 +599,12 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/contractnegotiations/7cff6ecb-7e5e-40b8-b101-eba3f2045b1f/cancel",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/contractnegotiations/7cff6ecb-7e5e-40b8-b101-eba3f2045b1f/cancel",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"contractnegotiations",
 						"7cff6ecb-7e5e-40b8-b101-eba3f2045b1f",
 						"cancel"
@@ -651,12 +651,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/transferprocesses",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"transferprocesses"
 					]
 				}
@@ -689,12 +689,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses/{{TRANSFER_PROCESS_ID}}",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/transferprocesses/{{TRANSFER_PROCESS_ID}}",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"transferprocesses",
 						"{{TRANSFER_PROCESS_ID}}"
 					]
@@ -737,12 +737,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v2/transferprocesses/request",
+					"raw": "{{CONSUMER_MANAGEMENT_URL}}/v3/transferprocesses/request",
 					"host": [
 						"{{CONSUMER_MANAGEMENT_URL}}"
 					],
 					"path": [
-						"v2",
+						"v3",
 						"transferprocesses",
 						"request"
 					]

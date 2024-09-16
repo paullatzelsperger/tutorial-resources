@@ -49,7 +49,7 @@ provider "helm" {
 
 # First connector
 module "alice-connector" {
-  depends_on        = [module.azurite]
+  depends_on = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "alice"
   participantId     = var.alice-bpn
@@ -59,11 +59,17 @@ module "alice-connector" {
     user     = local.databases.alice.database-username
     password = local.databases.alice.database-password
   }
-  ssi-config = {
-    oauth-clientid     = "alice_private_client"
-    oauth-secretalias  = "client_secret_alias"
-    oauth-clientsecret = "alice_private_client"
+  dcp-config = {
+    id                     = "did:web:bob"
+    sts_token_url          = "https://change.me"
+    sts_client_id          = "sts-client-id-bob"
+    sts_clientsecret_alias = "key-1"
   }
+  dataplane = {
+    privatekey-alias = "alice-dp-signer-key-alias"
+    publickey-alias  = "alice-dp-verifier-key-alias"
+  }
+
   azure-account-name    = var.alice-azure-account-name
   azure-account-key     = local.alice-azure-key-base64
   azure-account-key-sas = var.alice-azure-key-sas
@@ -77,7 +83,7 @@ module "alice-connector" {
 
 # Second connector
 module "bob-connector" {
-  depends_on        = [module.azurite]
+  depends_on = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "bob"
   participantId     = var.bob-bpn
@@ -87,11 +93,17 @@ module "bob-connector" {
     user     = local.databases.bob.database-username
     password = local.databases.bob.database-password
   }
-  ssi-config = {
-    oauth-clientid     = "bob_private_client"
-    oauth-secretalias  = "client_secret_alias"
-    oauth-clientsecret = "bob_private_client"
+  dcp-config = {
+    id                     = "did:web:bob"
+    sts_token_url          = "https://change.me"
+    sts_client_id          = "sts-client-id-bob"
+    sts_clientsecret_alias = "key-1"
   }
+  dataplane = {
+    privatekey-alias = "bob-dp-signer-key-alias"
+    publickey-alias  = "bob-dp-verifier-key-alias"
+  }
+
   azure-account-name    = var.bob-azure-account-name
   azure-account-key     = local.bob-azure-key-base64
   azure-account-key-sas = var.bob-azure-key-sas
@@ -110,6 +122,6 @@ module "azurite" {
 
 locals {
   alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
-  bob-azure-key-base64   = base64encode(var.bob-azure-account-key)
+  bob-azure-key-base64 = base64encode(var.bob-azure-account-key)
   trudy-azure-key-base64 = base64encode(var.trudy-azure-account-key)
 }

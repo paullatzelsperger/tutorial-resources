@@ -157,7 +157,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/v2/policydefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v3/policydefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
@@ -197,7 +197,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/v2/contractdefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v3/contractdefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
@@ -237,7 +237,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/v2/contractdefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v3/contractdefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
