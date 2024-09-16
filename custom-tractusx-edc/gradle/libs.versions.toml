@@ -2,9 +2,10 @@
 format.version = "1.1"
 
 [versions]
-edc = "0.7.0"
-tractusx = "0.7.2"
+edc = "0.10.0-SNAPSHOT"
+tractusx = "0.8.0-rc2"
 opentelemetry = "1.32.0"
+postgres = "42.7.3"
 
 [libraries]
 edc-controlplane-postgresql-hashicorp-vault = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }
@@ -12,6 +13,67 @@ edc-dataplane-hashicorp-vault = { module = "org.eclipse.tractusx.edc:edc-datapla
 edc-identity-trust-sts-remote-client = { module = "org.eclipse.edc:identity-trust-sts-remote-client", version.ref = "edc" }
 edc-auth-oauth2-client = { module = "org.eclipse.edc:oauth2-client", version.ref = "edc" }
 edc-build-plugin = { module = "org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin", version.ref = "edc" }
+edc-vault-hashicorp = { module = "org.eclipse.edc:vault-hashicorp", version.ref = "edc" }
+edc-boot = { module = "org.eclipse.edc:boot", version.ref = "edc" }
+edc-lib-crypto = { module = "org.eclipse.edc:crypto-common-lib", version.ref = "edc" }
+edc-lib-keys = { module = "org.eclipse.edc:keys-lib", version.ref = "edc" }
+edc-sql-core = { module = "org.eclipse.edc:sql-core", version.ref = "edc" }
+edc-sql-lease = { module = "org.eclipse.edc:sql-lease", version.ref = "edc" }
+edc-sql-pool = { module = "org.eclipse.edc:sql-pool-apache-commons", version.ref = "edc" }
+edc-sql-transactionlocal = { module = "org.eclipse.edc:transaction-local", version.ref = "edc" }
+edc-did-core = { module = "org.eclipse.edc:identity-did-core", version.ref = "edc" }
+edc-did-web = { module = "org.eclipse.edc:identity-did-web", version.ref = "edc" }
+edc-core-connector = { module = "org.eclipse.edc:connector-core", version.ref = "edc" }
+edc-ext-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
+edc-ext-jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
+
+# identith-hub SPI modules
+edc-ih-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }
+edc-ih-spi-store = { module = "org.eclipse.edc:identity-hub-store-spi", version.ref = "edc" }
+edc-ih-spi-participant = { module = "org.eclipse.edc:participant-context-spi", version.ref = "edc" }
+
+# identity-hub core modules
+edc-api-observability = { module = "org.eclipse.edc:api-observability", version.ref = "edc" }
+edc-sql-ih-credstore-sql = { module = "org.eclipse.edc:identity-hub-credentials-store-sql", version.ref = "edc" }
+edc-sql-ih-didstore-sql = { module = "org.eclipse.edc:identity-hub-did-store-sql", version.ref = "edc" }
+edc-sql-ih-keypairstore-sql = { module = "org.eclipse.edc:identity-hub-keypair-store-sql", version.ref = "edc" }
+edc-sql-ih-pcstore-sql = { module = "org.eclipse.edc:identity-hub-participantcontext-store-sql", version.ref = "edc" }
+edc-ih-core = { module = "org.eclipse.edc:identity-hub-core", version.ref = "edc" }
+edc-ih-keypairs = { module = "org.eclipse.edc:identity-hub-keypairs", version.ref = "edc" }
+edc-ih-did = { module = "org.eclipse.edc:identity-hub-did", version.ref = "edc" }
+edc-ih-participants = { module = "org.eclipse.edc:identity-hub-participants", version.ref = "edc" }
+edc-ih-did-localpub = { module = "org.eclipse.edc:local-did-publisher", version.ref = "edc" }
+edc-ih-lib-credentialquery = { module = "org.eclipse.edc:credential-query-lib", version.ref = "edc" }
+
+# identithub api modules
+edc-ih-api-presentation = { module = "org.eclipse.edc:presentation-api", version.ref = "edc" }
+edc-ih-mgmt-config = { module = "org.eclipse.edc:api-configuration", version.ref = "edc" }
+edc-ih-mgmt-authentication = { module = "org.eclipse.edc:identityhub-api-authentication", version.ref = "edc" }
+edc-ih-mgmt-authorization = { module = "org.eclipse.edc:identityhub-api-authorization", version.ref = "edc" }
+edc-ih-mgmt-participantcontext = { module = "org.eclipse.edc:participant-context-api", version.ref = "edc" }
+edc-ih-mgmt-verifiablecredential = { module = "org.eclipse.edc:verifiable-credentials-api", version.ref = "edc" }
+edc-ih-mgmt-did = { module = "org.eclipse.edc:did-api", version.ref = "edc" }
+edc-ih-mgmt-keypairs = { module = "org.eclipse.edc:keypair-api", version.ref = "edc" }
+
+# EDC STS dependencies
+edc-sts-spi = { module = "org.eclipse.edc:identity-trust-sts-spi", version.ref = "edc" }
+edc-sts-core = { module = "org.eclipse.edc:identity-trust-sts-core", version.ref = "edc" }
+edc-sts = { module = "org.eclipse.edc:identity-trust-sts-embedded", version.ref = "edc" }
+edc-sts-api = { module = "org.eclipse.edc:identity-trust-sts-api", version.ref = "edc" }
+
+# third-party libraries
+postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
+
+
+[bundles]
+sql-ih = ["edc-sql-ih-credstore-sql", "edc-sql-ih-didstore-sql", "edc-sql-ih-keypairstore-sql", "edc-sql-ih-pcstore-sql", "edc-sql-core", "edc-sql-pool", "edc-sql-transactionlocal", "postgres"]
+identityhub = ["edc-ih-core", "edc-ih-api-presentation", "edc-ih-participants", "edc-ih-keypairs"]
+identity-api = ["edc-ih-mgmt-config", "edc-ih-mgmt-did", "edc-ih-mgmt-participantcontext", "edc-ih-mgmt-verifiablecredential",
+    "edc-ih-mgmt-keypairs", "edc-ih-mgmt-authentication", "edc-ih-mgmt-authorization"]
+did = ["edc-did-web", "edc-did-core", "edc-ih-did", "edc-ih-did-localpub"]
+connector = ["edc-boot", "edc-core-connector", "edc-ext-http", "edc-api-observability", "edc-ext-jsonld"]
+
+
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }

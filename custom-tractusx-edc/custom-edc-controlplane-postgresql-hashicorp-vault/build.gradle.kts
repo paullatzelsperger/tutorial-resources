@@ -24,7 +24,6 @@ dependencies {
     runtimeOnly(libs.edc.controlplane.postgresql.hashicorp.vault) {
         exclude(module = "tx-iatp-sts-dim")
     }
-    runtimeOnly(libs.edc.identity.trust.sts.remote.client)
     runtimeOnly(libs.edc.auth.oauth2.client)
 }
 

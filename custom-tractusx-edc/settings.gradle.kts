@@ -14,13 +14,27 @@
 
 rootProject.name = "custom-tractusx-edc"
 
-include(":custom-edc-controlplane-postgresql-hashicorp-vault")
-include(":custom-edc-dataplane-hashicorp-vault")
-
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
 dependencyResolutionManagement {
     repositories {
-        mavenCentral()
         mavenLocal()
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
+        mavenCentral()
     }
 }
+
+include(":custom-edc-controlplane-postgresql-hashicorp-vault")
+include(":custom-edc-dataplane-hashicorp-vault")
+include(":tx-identityhub")

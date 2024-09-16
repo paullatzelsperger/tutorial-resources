@@ -1,19 +1,3 @@
-#################################################################################
-#
-#  Copyright (c) 2024 SAP SE
-#
-#  This program and the accompanying materials are made available under the
-#  terms of the Apache License, Version 2.0 which is available at
-#  https://www.apache.org/licenses/LICENSE-2.0
-#
-#  SPDX-License-Identifier: Apache-2.0
-#
-#  Contributors:
-#       SAP SE - initial API and implementation
-#
-#################################################################################
-
-
 FROM eclipse-temurin:22.0.1_8-jre-alpine
 ARG JAR
 ARG OTEL_JAR
@@ -36,7 +20,7 @@ RUN adduser \
 USER "$APP_USER"
 WORKDIR /app
 
-COPY ${JAR} edc-controlplane.jar
+COPY ${JAR} identityhub.jar
 COPY ${OTEL_JAR} opentelemetry-javaagent.jar
 COPY ${ADDITIONAL_FILES} ./
 
@@ -53,4 +37,4 @@ CMD ["sh", "-c", "exec java", \
      "-Dotel.exporter.prometheus.port=9090", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \
-     "edc-controlplane.jar"]
+     "identityhub.jar"]
