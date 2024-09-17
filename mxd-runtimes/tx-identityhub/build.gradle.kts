@@ -22,6 +22,7 @@ dependencies {
 
     runtimeOnly(libs.bundles.identityhub)
     runtimeOnly(libs.edc.api.observability)
+
     runtimeOnly(libs.edc.vault.hashicorp)
     runtimeOnly(libs.bundles.sql.ih)
 

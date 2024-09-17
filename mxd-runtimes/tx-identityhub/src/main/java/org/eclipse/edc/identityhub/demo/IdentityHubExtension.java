@@ -12,7 +12,7 @@
  *
  */
 
-package org.eclipse.edc.demo.dcp.ih;
+package org.eclipse.edc.identityhub.demo;
 
 import org.eclipse.edc.identityhub.spi.ScopeToCriterionTransformer;
 import org.eclipse.edc.runtime.metamodel.annotation.Extension;
