@@ -36,3 +36,4 @@ dependencyResolutionManagement {
 }
 
 include(":tx-identityhub")
+include(":backend-service")
