@@ -33,12 +33,15 @@ dependencies {
     runtimeOnly(libs.edc.ih.spi.store)
     runtimeOnly(libs.edc.ih.lib.credentialquery)
 
-    testImplementation(libs.edc.lib.crypto)
-    testImplementation(libs.edc.lib.keys)
 
     runtimeOnly(libs.edc.sts.core)
     runtimeOnly(libs.edc.sts)
     runtimeOnly(libs.edc.sts.api)
+
+
+    testImplementation(libs.edc.lib.crypto)
+    testImplementation(libs.edc.lib.keys)
+    testImplementation(libs.edc.junit)
 }
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {

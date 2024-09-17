@@ -125,6 +125,21 @@ module "bob-connector" {
   ingress-host = var.bob-ingress-host
 }
 
+module "bob-identityhub" {
+  source = "./modules/identity-hub"
+  credentials-dir = ""
+  database = {
+    user = local.databases.bob.database-username
+    password = local.databases.bob.database-password
+    url = "jdbc:postgresql://${local.bob-postgres.database-host}/${local.databases.bob.database-name}"
+  }
+  humanReadableName = "bob-ih"
+  namespace = "default"
+  participantId = "did:web:bob"
+  vault-url = "http://bob-vault:8200"
+  service-name = "bob"
+}
+
 module "azurite" {
   source           = "./modules/azurite"
   azurite-accounts = "${var.alice-azure-account-name}:${local.alice-azure-key-base64};${var.bob-azure-account-name}:${local.bob-azure-key-base64};${var.trudy-azure-account-name}:${local.trudy-azure-key-base64};"

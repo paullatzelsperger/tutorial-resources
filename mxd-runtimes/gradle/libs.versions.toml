@@ -3,7 +3,7 @@ format.version = "1.1"
 
 [versions]
 edc = "0.10.0-SNAPSHOT"
-tractusx = "0.8.0-rc2"
+tractusx = "0.8.0-SNAPSHOT"
 opentelemetry = "1.32.0"
 postgres = "42.7.3"
 
@@ -15,6 +15,7 @@ edc-auth-oauth2-client = { module = "org.eclipse.edc:oauth2-client", version.ref
 edc-build-plugin = { module = "org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin", version.ref = "edc" }
 edc-vault-hashicorp = { module = "org.eclipse.edc:vault-hashicorp", version.ref = "edc" }
 edc-boot = { module = "org.eclipse.edc:boot", version.ref = "edc" }
+edc-junit = { module = "org.eclipse.edc:junit", version.ref = "edc" }
 edc-lib-crypto = { module = "org.eclipse.edc:crypto-common-lib", version.ref = "edc" }
 edc-lib-keys = { module = "org.eclipse.edc:keys-lib", version.ref = "edc" }
 edc-sql-core = { module = "org.eclipse.edc:sql-core", version.ref = "edc" }
