@@ -32,12 +32,14 @@ edc-ih-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }
 edc-ih-spi-store = { module = "org.eclipse.edc:identity-hub-store-spi", version.ref = "edc" }
 edc-ih-spi-participant = { module = "org.eclipse.edc:participant-context-spi", version.ref = "edc" }
 
-# identity-hub core modules
+# identity-hub sql modules
 edc-api-observability = { module = "org.eclipse.edc:api-observability", version.ref = "edc" }
 edc-sql-ih-credstore-sql = { module = "org.eclipse.edc:identity-hub-credentials-store-sql", version.ref = "edc" }
 edc-sql-ih-didstore-sql = { module = "org.eclipse.edc:identity-hub-did-store-sql", version.ref = "edc" }
 edc-sql-ih-keypairstore-sql = { module = "org.eclipse.edc:identity-hub-keypair-store-sql", version.ref = "edc" }
 edc-sql-ih-pcstore-sql = { module = "org.eclipse.edc:identity-hub-participantcontext-store-sql", version.ref = "edc" }
+
+# identity-hub core modules
 edc-ih-core = { module = "org.eclipse.edc:identity-hub-core", version.ref = "edc" }
 edc-ih-keypairs = { module = "org.eclipse.edc:identity-hub-keypairs", version.ref = "edc" }
 edc-ih-did = { module = "org.eclipse.edc:identity-hub-did", version.ref = "edc" }

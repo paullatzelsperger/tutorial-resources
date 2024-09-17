@@ -27,8 +27,10 @@ COPY ${ADDITIONAL_FILES} ./
 ENV WEB_HTTP_PORT="8080"
 ENV WEB_HTTP_PATH="/api"
 
-HEALTHCHECK --interval=5s --timeout=5s --retries=10 CMD curl --fail http://localhost:8080/api/check/health
-CMD ["sh", "-c", "exec java", \
+# health check is handled by K8S
+HEALTHCHECK NONE
+
+CMD ["java", \
      "-javaagent:/app/opentelemetry-javaagent.jar", \
      "-Dedc.fs.config=/app/configuration.properties", \
      "-Djava.util.logging.config.file=/app/logging.properties", \

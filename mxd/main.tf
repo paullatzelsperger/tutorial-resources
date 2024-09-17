@@ -26,11 +26,6 @@ terraform {
     random = {
       source = "hashicorp/random"
     }
-
-    keycloak = {
-      source  = "mrparkers/keycloak"
-      version = "4.4.0"
-    }
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
@@ -60,9 +55,9 @@ module "alice-connector" {
     password = local.databases.alice.database-password
   }
   dcp-config = {
-    id                     = "did:web:bob"
+    id                     = "did:web:alice"
     sts_token_url          = "https://change.me"
-    sts_client_id          = "sts-client-id-bob"
+    sts_client_id          = "sts-client-id-alice"
     sts_clientsecret_alias = "key-1"
   }
   dataplane = {
@@ -79,6 +74,21 @@ module "alice-connector" {
     minio-password = "aliceawssecret"
   }
   ingress-host = var.alice-ingress-host
+}
+
+module "alice-identityhub" {
+  source = "./modules/identity-hub"
+  credentials-dir = ""
+  database = {
+    user = local.databases.alice.database-username
+    password = local.databases.alice.database-password
+    url = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
+  }
+  humanReadableName = "alice-ih"
+  namespace = "default"
+  participantId = "did:web:alice"
+  vault-url = "http://alice-vault:8200"
+  service-name = "alice"
 }
 
 # Second connector

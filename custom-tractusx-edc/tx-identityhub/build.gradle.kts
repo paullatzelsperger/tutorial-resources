@@ -25,15 +25,11 @@ dependencies {
     runtimeOnly(libs.edc.vault.hashicorp)
     runtimeOnly(libs.bundles.sql.ih)
 
-//    runtimeOnly(project(":extensions:superuser-seed"))
-
     runtimeOnly(libs.bundles.identity.api)
 
     implementation(libs.bundles.did)
-//    implementation(project(":extensions:did-example-resolver"))
     runtimeOnly(libs.bundles.connector)
     runtimeOnly(libs.edc.ih.spi.store)
-//    implementation(libs.edc.identity.vc.ldp)
     runtimeOnly(libs.edc.ih.lib.credentialquery)
 
     testImplementation(libs.edc.lib.crypto)
