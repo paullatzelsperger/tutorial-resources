@@ -12,26 +12,27 @@
  *
  ********************************************************************************/
 
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+rootProject.name = "mxd-runtimes"
 
-plugins {
-    `java-library`
-    id("application")
-    alias(libs.plugins.shadow)
-}
-
-dependencies {
-    runtimeOnly(libs.edc.controlplane.postgresql.hashicorp.vault) {
-        exclude(module = "tx-iatp-sts-dim")
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
+        mavenCentral()
+        gradlePluginPortal()
     }
-    runtimeOnly(libs.edc.auth.oauth2.client)
 }
 
-tasks.withType<ShadowJar> {
-    mergeServiceFiles()
-    archiveFileName.set("${project.name}.jar")
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
+        mavenCentral()
+    }
 }
 
-application {
-    mainClass.set("org.eclipse.edc.boot.system.runtime.BaseRuntime")
-}
+include(":tx-identityhub")
