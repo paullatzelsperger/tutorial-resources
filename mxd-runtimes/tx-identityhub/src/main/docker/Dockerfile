@@ -28,7 +28,6 @@ COPY ${ADDITIONAL_FILES} ./
 HEALTHCHECK NONE
 
 CMD ["java", \
-     "-javaagent:/app/opentelemetry-javaagent.jar", \
      "-Dedc.fs.config=/app/configuration.properties", \
      "-Djava.util.logging.config.file=/app/logging.properties", \
      "-Dotel.javaagent.configuration-file=/app/opentelemetry.properties", \

@@ -56,7 +56,7 @@ module "alice-connector" {
   }
   dcp-config = {
     id                     = "did:web:alice"
-    sts_token_url          = "https://change.me"
+    sts_token_url          = "http://alice-ih:7084/api/sts"
     sts_client_id          = "sts-client-id-alice"
     sts_clientsecret_alias = "key-1"
   }

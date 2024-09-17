@@ -22,17 +22,10 @@ variable "postgres-port" {
   default = 5432
 }
 
-variable "keycloak-static-ip" {
-  default = "10.96.103.80"
-}
-
 variable "keycloak-port" {
   default = 8080
 }
 
-variable "miw-static-ip" {
-  default = "10.96.81.222"
-}
 
 variable "miw-api-port" {
   default = 8000

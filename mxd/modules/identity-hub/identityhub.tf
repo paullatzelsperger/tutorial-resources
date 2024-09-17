@@ -47,8 +47,8 @@ resource "kubernetes_deployment" "identityhub" {
             }
           }
           port {
-            container_port = var.ports.resolution-api
-            name           = "res-port"
+            container_port = var.ports.presentation-api
+            name           = "pres-port"
           }
 
           port {
@@ -67,6 +67,10 @@ resource "kubernetes_deployment" "identityhub" {
             container_port = var.ports.web
             name           = "default-port"
           }
+          port {
+            container_port = var.ports.ih-sts
+            name           = "sts-port"
+          }
 
           volume_mount {
             mount_path = "/etc/credentials"
@@ -75,8 +79,8 @@ resource "kubernetes_deployment" "identityhub" {
 
           liveness_probe {
             http_get {
-              port   = var.ports.web
-              path   = "/api/check/liveness"
+              port = var.ports.web
+              path = "/api/check/liveness"
             }
             failure_threshold = 10
             period_seconds    = 5
@@ -85,8 +89,8 @@ resource "kubernetes_deployment" "identityhub" {
 
           readiness_probe {
             http_get {
-              port   = var.ports.web
-              path   = "/api/check/readiness"
+              port = var.ports.web
+              path = "/api/check/readiness"
             }
             failure_threshold = 10
             period_seconds    = 5
@@ -95,8 +99,8 @@ resource "kubernetes_deployment" "identityhub" {
 
           startup_probe {
             http_get {
-              port   = var.ports.web
-              path   = "/api/check/startup"
+              port = var.ports.web
+              path = "/api/check/startup"
             }
             failure_threshold = 10
             period_seconds    = 5
@@ -145,8 +149,10 @@ resource "kubernetes_config_map" "identityhub-config" {
     WEB_HTTP_PATH                   = "/api"
     WEB_HTTP_IDENTITY_PORT          = var.ports.ih-identity-api
     WEB_HTTP_IDENTITY_PATH          = "/api/identity"
-    WEB_HTTP_RESOLUTION_PORT        = var.ports.resolution-api
-    WEB_HTTP_RESOLUTION_PATH        = "/api/resolution"
+    WEB_HTTP_PRESENTATION_PORT      = var.ports.presentation-api
+    WEB_HTTP_PRESENTATION_PATH      = "/api/presentation"
+    WEB_HTTP_STS_PORT               = var.ports.ih-sts
+    WEB_HTTP_STS_PATH               = "/api/sts"
     WEB_HTTP_DID_PORT               = var.ports.ih-did
     WEB_HTTP_DID_PATH               = "/"
     JAVA_TOOL_OPTIONS               = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${var.ports.ih-debug}"

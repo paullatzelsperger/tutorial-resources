@@ -45,6 +45,7 @@ edc-sql-ih-credstore-sql = { module = "org.eclipse.edc:identity-hub-credentials-
 edc-sql-ih-didstore-sql = { module = "org.eclipse.edc:identity-hub-did-store-sql", version.ref = "edc" }
 edc-sql-ih-keypairstore-sql = { module = "org.eclipse.edc:identity-hub-keypair-store-sql", version.ref = "edc" }
 edc-sql-ih-pcstore-sql = { module = "org.eclipse.edc:identity-hub-participantcontext-store-sql", version.ref = "edc" }
+edc-sql-sts-clientstore = { module = "org.eclipse.edc:sts-client-store-sql", version.ref = "edc" }
 
 # identity-hub core modules
 edc-ih-core = { module = "org.eclipse.edc:identity-hub-core", version.ref = "edc" }
@@ -69,7 +70,7 @@ edc-sts-spi = { module = "org.eclipse.edc:identity-trust-sts-spi", version.ref =
 edc-sts-core = { module = "org.eclipse.edc:identity-trust-sts-core", version.ref = "edc" }
 edc-sts = { module = "org.eclipse.edc:identity-trust-sts-embedded", version.ref = "edc" }
 edc-sts-api = { module = "org.eclipse.edc:identity-trust-sts-api", version.ref = "edc" }
-edc-sts-accountprovisioner =  { module = "org.eclipse.edc:sts-account-provisioner", version.ref = "edc" }
+edc-sts-accountprovisioner = { module = "org.eclipse.edc:sts-account-provisioner", version.ref = "edc" }
 
 # third-party libraries
 postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
@@ -80,7 +81,8 @@ junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", vers
 apache-commons = { module = "org.apache.commons:commons-dbcp2", version.ref = "commons" }
 
 [bundles]
-sql-ih = ["edc-sql-ih-credstore-sql", "edc-sql-ih-didstore-sql", "edc-sql-ih-keypairstore-sql", "edc-sql-ih-pcstore-sql", "edc-sql-core", "edc-sql-pool", "edc-sql-transactionlocal", "postgres"]
+sql-ih = ["edc-sql-ih-credstore-sql", "edc-sql-ih-didstore-sql", "edc-sql-ih-keypairstore-sql", "edc-sql-ih-pcstore-sql", "edc-sql-sts-clientstore",
+    "edc-sql-core", "edc-sql-pool", "edc-sql-transactionlocal", "postgres"]
 identityhub = ["edc-ih-core", "edc-ih-api-presentation", "edc-ih-participants", "edc-ih-keypairs"]
 identity-api = ["edc-ih-mgmt-config", "edc-ih-mgmt-did", "edc-ih-mgmt-participantcontext", "edc-ih-mgmt-verifiablecredential",
     "edc-ih-mgmt-keypairs", "edc-ih-mgmt-authentication", "edc-ih-mgmt-authorization"]
