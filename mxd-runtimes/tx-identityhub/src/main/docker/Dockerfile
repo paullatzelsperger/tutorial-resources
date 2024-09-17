@@ -24,9 +24,6 @@ COPY ${JAR} identityhub.jar
 COPY ${OTEL_JAR} opentelemetry-javaagent.jar
 COPY ${ADDITIONAL_FILES} ./
 
-ENV WEB_HTTP_PORT="8080"
-ENV WEB_HTTP_PATH="/api"
-
 # health check is handled by K8S
 HEALTHCHECK NONE
 

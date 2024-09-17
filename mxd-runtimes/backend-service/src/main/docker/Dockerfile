@@ -35,14 +35,10 @@ WORKDIR /app
 
 COPY ${JAR} backend-service.jar
 
-ENV WEB_HTTP_PORT="8080"
-ENV WEB_HTTP_PATH="/api"
-
 # health check is handled by K8S
 HEALTHCHECK NONE
 
 CMD ["java", \
-     "-Dedc.fs.config=/app/configuration.properties", \
      "-Djava.util.logging.config.file=/app/logging.properties", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \

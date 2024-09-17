@@ -15,6 +15,9 @@
 package org.eclipse.tractusx.mxd.testfixtures;
 
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
+import org.eclipse.edc.junit.extensions.EmbeddedRuntime;
+import org.eclipse.edc.junit.extensions.RuntimeExtension;
+import org.eclipse.edc.junit.extensions.RuntimePerMethodExtension;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -26,13 +29,13 @@ public interface PostgresRuntime {
     BeforeAllCallback CREATE_DATABASE = context -> PostgresqlEndToEndInstance.createDatabase(PostgresqlEndToEndInstance.DB_NAME);
 
     @RegisterExtension
-    EdcRuntimeExtension RUNTIME = new EdcRuntimeExtension(
+    RuntimeExtension RUNTIME = new RuntimePerMethodExtension(new EmbeddedRuntime(
             "backend",
             Map.of(
                     "edc.datasource.default.url", PostgresqlEndToEndInstance.JDBC_URL_PREFIX + PostgresqlEndToEndInstance.DB_NAME,
                     "edc.datasource.default.user", PostgresqlEndToEndInstance.USER,
                     "edc.datasource.default.password", PostgresqlEndToEndInstance.PASSWORD
             )
-    );
+    ));
 
 }

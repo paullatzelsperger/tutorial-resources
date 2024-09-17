@@ -18,6 +18,7 @@ import io.restassured.response.ValidatableResponse;
 import jakarta.json.JsonObject;
 import org.eclipse.edc.junit.annotations.PostgresqlIntegrationTest;
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
+import org.eclipse.edc.junit.extensions.RuntimeExtension;
 import org.eclipse.tractusx.mxd.testfixtures.PostgresRuntime;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,7 +59,7 @@ public class TransferApiEndToEndTest {
         private final static String TRANSFER_API_ENDPOINT = "/v1/transfers/";
         private final static String CONTENT_API_ENDPOINT = "/v1/contents/";
 
-        Tests(EdcRuntimeExtension runtime) {
+        Tests(RuntimeExtension runtime) {
             super(runtime);
         }
 

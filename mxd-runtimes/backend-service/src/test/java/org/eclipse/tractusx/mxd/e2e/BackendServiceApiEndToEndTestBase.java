@@ -16,6 +16,9 @@ package org.eclipse.tractusx.mxd.e2e;
 
 import io.restassured.specification.RequestSpecification;
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
+import org.eclipse.edc.junit.extensions.EmbeddedRuntime;
+import org.eclipse.edc.junit.extensions.RuntimeExtension;
+import org.eclipse.edc.junit.extensions.RuntimePerClassExtension;
 
 import java.net.URI;
 import java.util.Map;
@@ -24,9 +27,9 @@ import static io.restassured.RestAssured.given;
 
 public abstract class BackendServiceApiEndToEndTestBase {
 
-    protected final EdcRuntimeExtension runtime;
+    protected final RuntimeExtension runtime;
 
-    public BackendServiceApiEndToEndTestBase(EdcRuntimeExtension runtime) {
+    public BackendServiceApiEndToEndTestBase(RuntimeExtension runtime) {
         this.runtime = runtime;
     }
 
@@ -39,11 +42,7 @@ public abstract class BackendServiceApiEndToEndTestBase {
     }
 
     public URI getBaseUri() {
-        Map configs = runtime.getContext().getConfig().getEntries();
-        String port = configs.get("web.http.port").toString();
-        String host = configs.get("edc.hostname").toString();
-        String path = configs.get("web.http.path").toString();
-        return URI.create("http://" + host + ":" + port + path);
+        return URI.create("http:/localhost:8080/api");
     }
 
 }

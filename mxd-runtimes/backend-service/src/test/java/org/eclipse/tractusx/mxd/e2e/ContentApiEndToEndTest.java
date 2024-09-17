@@ -18,6 +18,8 @@ import io.restassured.http.ContentType;
 import jakarta.json.JsonObject;
 import org.eclipse.edc.junit.annotations.PostgresqlIntegrationTest;
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
+import org.eclipse.edc.junit.extensions.EmbeddedRuntime;
+import org.eclipse.edc.junit.extensions.RuntimeExtension;
 import org.eclipse.tractusx.mxd.testfixtures.PostgresRuntime;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -55,7 +57,7 @@ public class ContentApiEndToEndTest {
 
         private final static String ENDPOINT = "/v1/contents/";
 
-        Tests(EdcRuntimeExtension runtime) {
+        Tests(RuntimeExtension runtime) {
             super(runtime);
         }
 
