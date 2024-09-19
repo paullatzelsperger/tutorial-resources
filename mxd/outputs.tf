@@ -33,14 +33,6 @@ output "connector2-client-secret" {
   value = module.bob-connector.client_secret
 }
 
-output "keycloak-database-credentials" {
-  value = local.keycloak-postgres
-}
-
-output "miw-database-credentials" {
-  value = local.miw-postgres
-}
-
 output "bob-database-credentials" {
   value = local.alice-postgres
 }

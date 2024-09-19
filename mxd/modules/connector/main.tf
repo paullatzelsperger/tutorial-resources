@@ -77,10 +77,11 @@ resource "helm_release" "connector" {
           "EDC_BLOBSTORE_ENDPOINT_TEMPLATE" : local.edc-blobstore-endpoint-template
           "EDC_DATAPLANE_SELECTOR_DEFAULTPLANE_SOURCETYPES" : "HttpData,AmazonS3,AzureStorage"
           "EDC_DATAPLANE_SELECTOR_DEFAULTPLANE_DESTINATIONTYPES" : "HttpProxy,AmazonS3,AzureStorage"
+          EDC_IAM_DID_WEB_USE_HTTPS: "false"
         }
         bdrs : {
           server : {
-            url : "https://bdrs.test.org"
+            url : "http://bdrs-server:8082/api/directory"
           }
         }
       }

@@ -23,16 +23,21 @@ resource "helm_release" "bdrs-server" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "bdrs-server"
-  version    = "0.0.4"
+  version    = "0.5.2"
 
   values = [
     yamlencode({
       server : {
+        debug : {
+          enabled : true
+          port : 1046
+        }
         trustedIssuers : ["did:web:miw:${var.miw-bpn}"]
         env : {
           EDC_API_AUTH_KEY : "password"
           EDC_DATASOURCE_DIDENTRY_USER : local.databases.bdrs.database-username
           EDC_DATASOURCE_DIDENTRY_PASSWORD : local.databases.bdrs.database-password
+          EDC_IAM_DID_WEB_USE_HTTPS : "false"
         }
       }
       postgresql : {

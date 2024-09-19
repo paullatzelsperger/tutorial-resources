@@ -104,6 +104,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "CONTROL_PLANE_HOST=alice-controlplane",
             "--env-var", "PARTICIPANT_CONTEXT_ID=participant-alice",
             "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYWxpY2U=",
+            "--env-var", "IDENTITYHUB_URL=http://alice-ih:${module.alice-identityhub.ports.presentation-api}/api/presentation",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -124,6 +125,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "CONTROL_PLANE_HOST=bob-controlplane",
             "--env-var", "PARTICIPANT_CONTEXT_ID=participant-bob",
             "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYm9i",
+            "--env-var", "IDENTITYHUB_URL=http://bob-ih:${module.bob-identityhub.ports.presentation-api}/api/presentation",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {

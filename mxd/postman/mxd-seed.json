@@ -447,6 +447,16 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
 					],
 					"request": {
@@ -454,7 +464,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"active\": \"true\",\n    \"did\": \"{{PARTICIPANT_DID}}\",\n    \"key\": {\n        \"keyGeneratorParams\": {\n            \"algorithm\": \"EdDSA\",\n            \"curve\": \"Ed25519\"\n        },\n        \"keyId\": \"{{PARTICIPANT_DID}}#signing-key-1\",\n        \"privateKeyAlias\": \"signing-key-1\"\n    },\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"serviceEndpoints\": [\n        {\n            \"type\": \"CredentialService\",\n            \"serviceEndpoint\": \"http://{{CONTROL_PLANE_HOST}}:8081/api/resolution/v1/participants/{{{PARTICIPANT_CONTEXT_ID_BASE64}}\",\n            \"id\": \"credentialservice-1\"\n        },\n        {\n            \"type\": \"ProtocolEndpoint\",\n            \"serviceEndpoint\": \"http://{{CONTROL_PLANE_HOST}}:8084/api/dsp\",\n            \"id\": \"dsp-url\"\n        }\n    ]\n}",
+							"raw": "{\n    \"active\": \"true\",\n    \"did\": \"{{PARTICIPANT_DID}}\",\n    \"key\": {\n        \"keyGeneratorParams\": {\n            \"algorithm\": \"EdDSA\",\n            \"curve\": \"Ed25519\"\n        },\n        \"keyId\": \"{{PARTICIPANT_DID}}#signing-key-1\",\n        \"privateKeyAlias\": \"signing-key-1\"\n    },\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"serviceEndpoints\": [\n        {\n            \"type\": \"CredentialService\",\n            \"serviceEndpoint\": \"{{IDENTITYHUB_URL}}/v1/participants/{{PARTICIPANT_CONTEXT_ID_BASE64}}\",\n            \"id\": \"credentialservice-1\"\n        },\n        {\n            \"type\": \"ProtocolEndpoint\",\n            \"serviceEndpoint\": \"http://{{CONTROL_PLANE_HOST}}:8084/api/dsp\",\n            \"id\": \"dsp-url\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -497,7 +507,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/security/suites/jws-2020/v1\",\n                \"https://www.w3.org/ns/did/v1\",\n                {\n                    \"mxd-credentials\": \"https://w3id.org/mxd/credentials/\",\n                    \"membership\": \"mxd-credentials:membership\",\n                    \"membershipType\": \"mxd-credentials:membershipType\",\n                    \"website\": \"mxd-credentials:website\",\n                    \"contact\": \"mxd-credentials:contact\",\n                    \"since\": \"mxd-credentials:since\"\n                }\n            ],\n            \"id\": \"http://org.yourdataspace.com/credentials/2347\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"http://org.yourdataspace.com#MembershipCredential\"\n            ],\n            \"issuer\": \"did:example:dataspace-issuer\",\n            \"issuanceDate\": \"2023-08-18T00:00:00Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"membership\": {\n                    \"membershipType\": \"FullMember\",\n                    \"website\": \"www.whatever.com\",\n                    \"contact\": \"fizz.buzz@whatever.com\",\n                    \"since\": \"2023-01-01T00:00:00Z\"\n                }\n            }\n        },\n        \"rawVc\": \"asdf\"\n    }\n}",
+							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/security/suites/jws-2020/v1\",\n                \"https://www.w3.org/ns/did/v1\",\n                {\n                    \"mxd-credentials\": \"https://w3id.org/mxd/credentials/\",\n                    \"membership\": \"mxd-credentials:membership\",\n                    \"membershipType\": \"mxd-credentials:membershipType\",\n                    \"website\": \"mxd-credentials:website\",\n                    \"contact\": \"mxd-credentials:contact\",\n                    \"since\": \"mxd-credentials:since\"\n                }\n            ],\n            \"id\": \"http://org.yourdataspace.com/credentials/2347\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"MembershipCredential\"\n            ],\n            \"issuer\": \"did:example:dataspace-issuer\",\n            \"issuanceDate\": \"2023-08-18T00:00:00Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"membership\": {\n                    \"membershipType\": \"FullMember\",\n                    \"website\": \"www.whatever.com\",\n                    \"contact\": \"fizz.buzz@whatever.com\",\n                    \"since\": \"2023-01-01T00:00:00Z\"\n                }\n            }\n        },\n        \"rawVc\": \"asdf\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -703,6 +713,11 @@
 		{
 			"key": "PARTICIPANT_CONTEXT_ID_BASE64",
 			"value": "cGFydGljaXBhbnQtYWxpY2U=",
+			"type": "string"
+		},
+		{
+			"key": "IDENTITYHUB_URL",
+			"value": "alice-ih",
 			"type": "string"
 		}
 	]
