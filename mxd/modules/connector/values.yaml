@@ -29,8 +29,12 @@ controlplane:
     port: 1044
   livenessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   readinessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   service:
     type: NodePort
   endpoints:
@@ -55,8 +59,12 @@ dataplane:
     port: 1044
   livenessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   readinessProbe:
     enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
   image:
     pullPolicy: Never
 #    repository: "edc-dataplane-hashicorp-vault"

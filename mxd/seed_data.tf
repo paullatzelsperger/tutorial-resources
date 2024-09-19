@@ -29,7 +29,7 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
   }
   spec {
     // run only once
-    completions     = 1
+    completions                = 1
     completion_mode = "NonIndexed"
     // clean up any job pods after 90 seconds, failed or succeeded
     ttl_seconds_after_finished = "90"
@@ -84,6 +84,46 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "ALICE_BPN=${var.alice-bpn}",
             "--env-var", "BOB_BPN=${var.bob-bpn}",
             "--env-var", "TRUDY_BPN=${var.trudy-bpn}",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
+        // this container seeds ALICE's IdentityHub
+        container {
+          name  = "newman-ih-alice"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "SeedIH",
+            "--env-var", "IH_URL=http://alice-ih:7081",
+            "--env-var", "PARTICIPANT_DID=did:web:alice-ih%3A7083:alice",
+            "--env-var", "CONTROL_PLANE_HOST=alice-controlplane",
+            "--env-var", "PARTICIPANT_CONTEXT_ID=participant-alice",
+            "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYWxpY2U=",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
+        // this container seeds BOB's IdentityHub
+        container {
+          name  = "newman-ih-bob"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "SeedIH",
+            "--env-var", "IH_URL=http://bob-ih:7081",
+            "--env-var", "PARTICIPANT_DID=did:web:bob-ih%3A7083:bob",
+            "--env-var", "CONTROL_PLANE_HOST=bob-controlplane",
+            "--env-var", "PARTICIPANT_CONTEXT_ID=participant-bob",
+            "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYm9i",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {

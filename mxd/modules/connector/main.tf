@@ -34,7 +34,7 @@ resource "helm_release" "connector" {
 
   repository = "https://eclipse-tractusx.github.io/charts/dev"
   chart      = "tractusx-connector"
-  version    = "0.8.0-rc2"
+  version    = "0.8.0-rc3"
 
   values = [
     file("${path.module}/values.yaml"),
@@ -47,7 +47,6 @@ resource "helm_release" "connector" {
             "-c",
             join(" && ", [
               "sleep 5",
-#               "/bin/vault kv put secret/${var.dcp-config.sts_clientsecret_alias} content=${var.dcp-config.oauth-clientsecret}",
               "/bin/vault kv put secret/edc.aws.access.key content=${var.minio-config.minio-username}",
               "/bin/vault kv put secret/edc.aws.secret.access.key content=${var.minio-config.minio-password}",
               "/bin/vault kv put secret/${var.azure-account-name}-key content=${var.azure-account-key}",

@@ -37,22 +37,22 @@ variable "namespace" {
 
 variable "ports" {
   type = object({
-    web             = number
-    debug           = number
-    ih-debug        = number
-    ih-did          = number
-    ih-identity-api = number
-    presentation-api  = number
-    ih-sts             = number
+    web              = number
+    debug            = number
+    ih-debug         = number
+    ih-did           = number
+    ih-identity-api  = number
+    presentation-api = number
+    ih-sts           = number
   })
   default = {
-    web             = 7080
-    debug           = 1044
-    ih-debug        = 1045
-    ih-identity-api = 7081
-    presentation-api  = 7082
-    ih-did          = 7083
-    ih-sts             = 7084
+    web              = 7080
+    debug            = 1044
+    ih-debug         = 1045
+    ih-identity-api  = 7081
+    presentation-api = 7082
+    ih-did           = 7083
+    ih-sts           = 7084
   }
 }
 
@@ -94,7 +94,7 @@ variable "aliases" {
   }
 }
 
-variable "service-name" {
+variable "identityhub-path-name" {
   type        = string
   description = "Name of the Service endpoint"
 }

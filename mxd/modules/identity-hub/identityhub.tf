@@ -152,7 +152,7 @@ resource "kubernetes_config_map" "identityhub-config" {
     WEB_HTTP_PRESENTATION_PORT      = var.ports.presentation-api
     WEB_HTTP_PRESENTATION_PATH      = "/api/presentation"
     WEB_HTTP_STS_PORT               = var.ports.ih-sts
-    WEB_HTTP_STS_PATH               = "/api/sts"
+    WEB_HTTP_STS_PATH               = "/api/credentials"
     WEB_HTTP_DID_PORT               = var.ports.ih-did
     WEB_HTTP_DID_PATH               = "/"
     JAVA_TOOL_OPTIONS               = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${var.ports.ih-debug}"

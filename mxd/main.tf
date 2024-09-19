@@ -55,10 +55,10 @@ module "alice-connector" {
     password = local.databases.alice.database-password
   }
   dcp-config = {
-    id                     = "did:web:alice"
-    sts_token_url          = "http://alice-ih:7084/api/sts"
-    sts_client_id          = "sts-client-id-alice"
-    sts_clientsecret_alias = "key-1"
+    id                     = "did:web:alice-ih%3A7083:alice"
+    sts_token_url          = "http://alice-ih:7084/api/credentials/token"
+    sts_client_id          = "did:web:alice-ih%3A7083:alice"
+    sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
   dataplane = {
     privatekey-alias = "alice-dp-signer-key-alias"
@@ -88,7 +88,7 @@ module "alice-identityhub" {
   namespace = "default"
   participantId = "did:web:alice"
   vault-url = "http://alice-vault:8200"
-  service-name = "alice"
+  identityhub-path-name = "alice-ih"
 }
 
 # Second connector
@@ -104,10 +104,10 @@ module "bob-connector" {
     password = local.databases.bob.database-password
   }
   dcp-config = {
-    id                     = "did:web:bob"
-    sts_token_url          = "https://change.me"
-    sts_client_id          = "sts-client-id-bob"
-    sts_clientsecret_alias = "key-1"
+    id                     = "did:web:bob-ih%3A7083:bob"
+    sts_token_url          = "http://bob-ih:7084/api/credentials/token"
+    sts_client_id          = "did:web:bob-ih%3A7083:bob"
+    sts_clientsecret_alias = "participant-bob-sts-client-secret"
   }
   dataplane = {
     privatekey-alias = "bob-dp-signer-key-alias"
@@ -137,7 +137,7 @@ module "bob-identityhub" {
   namespace = "default"
   participantId = "did:web:bob"
   vault-url = "http://bob-vault:8200"
-  service-name = "bob"
+  identityhub-path-name = "bob-ih"
 }
 
 module "azurite" {
