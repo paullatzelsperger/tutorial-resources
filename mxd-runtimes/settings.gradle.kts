@@ -37,3 +37,4 @@ dependencyResolutionManagement {
 
 include(":tx-identityhub")
 include(":backend-service")
+include(":jwt-signer")
