@@ -140,21 +140,8 @@ resource "helm_release" "connector" {
 
 }
 
-resource "random_string" "kc_client_secret" {
-  length = 16
-}
-
-resource "random_string" "aes_key_raw" {
-  length = 16
-}
-
-resource "tls_private_key" "transfer_proxy_privatekey" {
-  algorithm = "ED25519"
-}
 
 locals {
-  aes_key_b64 = base64encode(random_string.aes_key_raw.result)
-  client_secret = base64encode(random_string.kc_client_secret.result)
   jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
   azure-sas-token = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })

@@ -56,15 +56,6 @@ variable "ports" {
   }
 }
 
-variable "credentials-dir" {
-  type        = string
-  description = "JSON object containing the credentials to seed, sorted by human-readable participant name"
-}
-
-variable "participant-list-file" {
-  type    = string
-  default = "./assets/participants/participants.k8s.json"
-}
 
 variable "ih_superuser_apikey" {
   default     = "c3VwZXItdXNlcg==.c3VwZXItc2VjcmV0LWtleQo="
@@ -94,7 +85,7 @@ variable "aliases" {
   }
 }
 
-variable "identityhub-path-name" {
+variable "url-path" {
   type        = string
   description = "Name of the Service endpoint"
 }

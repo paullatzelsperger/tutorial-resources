@@ -32,7 +32,7 @@ resource "kubernetes_ingress_v1" "api-ingress" {
       host = "localhost"
       http {
         path {
-          path = "/${var.identityhub-path-name}/cs(/|$)(.*)"
+          path = "/${var.url-path}/cs(/|$)(.*)"
           backend {
             service {
               name = kubernetes_service.ih-service.metadata.0.name
@@ -44,7 +44,7 @@ resource "kubernetes_ingress_v1" "api-ingress" {
         }
         # ingress path for the STS Token API
         path {
-          path = "/${var.identityhub-path-name}/sts(/|$)(.*)"
+          path = "/${var.url-path}/sts(/|$)(.*)"
           backend {
             service {
               name = kubernetes_service.ih-service.metadata.0.name
@@ -62,10 +62,10 @@ resource "kubernetes_ingress_v1" "api-ingress" {
 // the DID endpoint can not actually modify the URL, otherwise it'll mess up the DID resolution
 resource "kubernetes_ingress_v1" "did-ingress" {
   metadata {
-    name      = "${var.identityhub-path-name}-did-ingress"
+    name      = "${var.url-path}-did-server-ingress"
     namespace = var.namespace
     annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/${var.identityhub-path-name}/$2"
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/${var.url-path}/$2"
     }
   }
 
@@ -76,7 +76,7 @@ resource "kubernetes_ingress_v1" "did-ingress" {
       http {
         # ingress routes for the DID endpoint
         path {
-          path = "/${var.identityhub-path-name}(/|&)(.*)"
+          path = "/${var.url-path}(/|&)(.*)"
           backend {
             service {
               name = kubernetes_service.ih-service.metadata.0.name

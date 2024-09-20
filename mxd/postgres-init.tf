@@ -56,26 +56,13 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 }
 
 locals {
-  keycloak-postgres       = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["keycloak"]
-  miw-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["miw"]
   bdrs-postgres           = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bdrs"]
   alice-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["alice"]
   bob-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bob"]
-  trudy-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["trudy"]
+  # trudy-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["trudy"]
   backendservice-postgres = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["backendservice"]
 
   databases = {
-    keycloak = {
-      database-name     = "keycloak",
-      database-username = "keycloak"
-      database-password = "keycloak"
-    }
-
-    miw = {
-      database-name     = "miw",
-      database-username = "miw"
-      database-password = "miw"
-    }
 
     bdrs = {
       database-name     = "bdrs",
@@ -95,11 +82,11 @@ locals {
       database-password = "bob"
     }
 
-    trudy = {
-      database-name     = "trudy",
-      database-username = "trudy"
-      database-password = "trudy"
-    }
+    # trudy = {
+    #   database-name     = "trudy",
+    #   database-username = "trudy"
+    #   database-password = "trudy"
+    # }
 
     backendservice = {
       database-name     = "backendservice",

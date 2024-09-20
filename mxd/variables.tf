@@ -98,6 +98,6 @@ variable "trudy-ingress-host" {
 }
 
 variable "common-postgres-instance" {
-  default = true
+  default = false
 }
 

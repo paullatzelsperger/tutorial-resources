@@ -72,11 +72,6 @@ resource "kubernetes_deployment" "identityhub" {
             name           = "sts-port"
           }
 
-          volume_mount {
-            mount_path = "/etc/credentials"
-            name       = "credentials-volume"
-          }
-
           liveness_probe {
             http_get {
               port = var.ports.web
@@ -107,30 +102,11 @@ resource "kubernetes_deployment" "identityhub" {
             timeout_seconds   = 30
           }
         }
-
-        volume {
-          name = "credentials-volume"
-          config_map {
-            name = kubernetes_config_map.identityhub-credentials-map.metadata[0].name
-          }
-        }
       }
-
     }
   }
 }
 
-
-resource "kubernetes_config_map" "identityhub-credentials-map" {
-  metadata {
-    name      = "${lower(var.humanReadableName)}-credentials"
-    namespace = var.namespace
-  }
-
-  data = {
-    for f in fileset(var.credentials-dir, "*-credential.json") : f => file(join("/", [var.credentials-dir, f]))
-  }
-}
 
 resource "kubernetes_config_map" "identityhub-config" {
   metadata {

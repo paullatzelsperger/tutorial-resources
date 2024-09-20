@@ -78,7 +78,6 @@ module "alice-connector" {
 
 module "alice-identityhub" {
   source = "./modules/identity-hub"
-  credentials-dir = ""
   database = {
     user = local.databases.alice.database-username
     password = local.databases.alice.database-password
@@ -88,7 +87,7 @@ module "alice-identityhub" {
   namespace = "default"
   participantId = var.alice-did
   vault-url = "http://alice-vault:8200"
-  identityhub-path-name = "alice-ih"
+  url-path = "alice-ih"
 }
 
 # Second connector
@@ -127,7 +126,6 @@ module "bob-connector" {
 
 module "bob-identityhub" {
   source = "./modules/identity-hub"
-  credentials-dir = ""
   database = {
     user = local.databases.bob.database-username
     password = local.databases.bob.database-password
@@ -137,7 +135,7 @@ module "bob-identityhub" {
   namespace = "default"
   participantId = var.bob-did
   vault-url = "http://bob-vault:8200"
-  identityhub-path-name = "bob-ih"
+  url-path = "bob-ih"
 }
 
 module "azurite" {
