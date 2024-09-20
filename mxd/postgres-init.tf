@@ -17,20 +17,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-# A single Postgres Instance and separate databases for each components
-module "common-postgres" {
-  count            = var.common-postgres-instance ? 1 : 0
-  source           = "./modules/postgres"
-  instance-name    = "common"
-  database-port    = var.postgres-port
-  init-sql-configs = [for k, v in tomap(local.databases) : "${k}-initdb-config"]
-}
-
 # Separate Postgres Instance for each components
 module "postgres" {
   depends_on       = [kubernetes_config_map.postgres-initdb-config]
   source           = "./modules/postgres"
-  for_each         = var.common-postgres-instance ? {} : tomap(local.databases)
+  for_each         = tomap(local.databases)
   instance-name    = each.key
   database-port    = var.postgres-port
   init-sql-configs = ["${each.key}-initdb-config"]
@@ -56,11 +47,11 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 }
 
 locals {
-  bdrs-postgres           = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bdrs"]
-  alice-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["alice"]
-  bob-postgres            = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["bob"]
-  # trudy-postgres          = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["trudy"]
-  backendservice-postgres = var.common-postgres-instance ? module.common-postgres[0] : module.postgres["backendservice"]
+  bdrs-postgres           = module.postgres["bdrs"]
+  alice-postgres          = module.postgres["alice"]
+  bob-postgres            = module.postgres["bob"]
+  # trudy-postgres          =  module.postgres["trudy"]
+  backendservice-postgres = module.postgres["backendservice"]
 
   databases = {
 

@@ -96,8 +96,3 @@ variable "bob-ingress-host" {
 variable "trudy-ingress-host" {
   default = "localhost"
 }
-
-variable "common-postgres-instance" {
-  default = false
-}
-
