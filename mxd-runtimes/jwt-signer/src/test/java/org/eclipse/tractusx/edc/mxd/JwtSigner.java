@@ -122,6 +122,9 @@ public class JwtSigner {
 
         var filePath = "%s/../../mxd/assets/issuer.key.jwk".formatted(System.getProperty("user.dir"));
         Files.write(Path.of(filePath), okp.toJSONString().getBytes());
+
+        var filePath2 = "%s/../../mxd/assets/issuer.pub.jwk".formatted(System.getProperty("user.dir"));
+        Files.write(Path.of(filePath2), okp.toPublicJWK().toJSONString().getBytes());
     }
 
 
