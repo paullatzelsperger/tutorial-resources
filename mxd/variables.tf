@@ -22,18 +22,7 @@ variable "postgres-port" {
   default = 5432
 }
 
-variable "keycloak-port" {
-  default = 8080
-}
 
-
-variable "miw-api-port" {
-  default = 8000
-}
-
-variable "miw-bpn" {
-  default = "BPNL000000000000"
-}
 
 variable "alice-bpn" {
   default = "BPNL000000000001"
@@ -45,6 +34,19 @@ variable "bob-bpn" {
 
 variable "trudy-bpn" {
   default = "BPNL000000000003"
+}
+
+
+variable "bob-did" {
+  default = "did:web:bob-ih%3A7083:bob"
+}
+
+variable "alice-did" {
+  default = "did:web:bob-ih%3A7083:bob"
+}
+
+variable "trudy-did" {
+  default = "did:web:trudy-ih%3A7083:trudy"
 }
 
 variable "alice-azure-account-name" {
@@ -98,3 +100,4 @@ variable "trudy-ingress-host" {
 variable "common-postgres-instance" {
   default = true
 }
+

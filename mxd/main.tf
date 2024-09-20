@@ -55,9 +55,9 @@ module "alice-connector" {
     password = local.databases.alice.database-password
   }
   dcp-config = {
-    id                     = "did:web:alice-ih%3A7083:alice"
+    id                     = var.alice-did
     sts_token_url          = "http://alice-ih:7084/api/credentials/token"
-    sts_client_id          = "did:web:alice-ih%3A7083:alice"
+    sts_client_id          = var.alice-did
     sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
   dataplane = {
@@ -86,7 +86,7 @@ module "alice-identityhub" {
   }
   humanReadableName = "alice-ih"
   namespace = "default"
-  participantId = "did:web:alice"
+  participantId = var.alice-did
   vault-url = "http://alice-vault:8200"
   identityhub-path-name = "alice-ih"
 }
@@ -104,9 +104,9 @@ module "bob-connector" {
     password = local.databases.bob.database-password
   }
   dcp-config = {
-    id                     = "did:web:bob-ih%3A7083:bob"
+    id                     = var.bob-did
     sts_token_url          = "http://bob-ih:7084/api/credentials/token"
-    sts_client_id          = "did:web:bob-ih%3A7083:bob"
+    sts_client_id          = var.bob-did
     sts_clientsecret_alias = "participant-bob-sts-client-secret"
   }
   dataplane = {
@@ -135,7 +135,7 @@ module "bob-identityhub" {
   }
   humanReadableName = "bob-ih"
   namespace = "default"
-  participantId = "did:web:bob"
+  participantId = var.bob-did
   vault-url = "http://bob-vault:8200"
   identityhub-path-name = "bob-ih"
 }

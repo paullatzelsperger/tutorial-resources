@@ -32,7 +32,7 @@ resource "helm_release" "bdrs-server" {
           enabled : true
           port : 1046
         }
-        trustedIssuers : ["did:web:miw:${var.miw-bpn}"]
+        trustedIssuers : ["did:web:dataspace-issuer"]
         env : {
           EDC_API_AUTH_KEY : "password"
           EDC_DATASOURCE_DIDENTRY_USER : local.databases.bdrs.database-username

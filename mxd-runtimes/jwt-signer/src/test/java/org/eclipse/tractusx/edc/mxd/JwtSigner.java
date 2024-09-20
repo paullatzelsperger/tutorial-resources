@@ -20,13 +20,12 @@ import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.gen.OctetKeyPairGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import org.eclipse.edc.keys.keyparsers.JwkParser;
-import org.eclipse.edc.keys.keyparsers.PemParser;
 import org.eclipse.edc.security.token.jwt.CryptoConverter;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,16 +33,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.PrivateKey;
-import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.mock;
@@ -73,7 +69,7 @@ public class JwtSigner {
                             "VerifiableCredential",
                             "MembershipCredential"
                         ],
-                        "issuer": "did:example:dataspace-issuer",
+                        "issuer": "did:web:dataspace-issuer",
                         "issuanceDate": "2023-08-18T00:00:00Z",
                         "credentialSubject": {
                             "id": "%s",
@@ -90,10 +86,10 @@ public class JwtSigner {
 
     @ParameterizedTest(name = "JWT VC for {2}")
     @ArgumentsSource(IdentifierProvider.class)
-    void generateJwt(String participantId, String did, String name) throws JOSEException, IOException {
+    void generate_credential_jwt(String participantId, String did, String name) throws JOSEException, IOException {
 
         var header = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
-                .keyID("did:example:dataspace-issuer#key-1")
+                .keyID("did:web:dataspace-issuer#key-1")
                 .type(JOSEObjectType.JWT)
                 .build();
 
@@ -103,7 +99,7 @@ public class JwtSigner {
         var claims = new JWTClaimsSet.Builder()
                 .audience(did)
                 .subject(did)
-                .issuer("did:example:dataspace-issuer")
+                .issuer("did:web:dataspace-issuer")
                 .claim("vc", credential)
                 .issueTime(Date.from(Instant.now()))
                 .build();
@@ -119,15 +115,13 @@ public class JwtSigner {
     }
 
     @Test
-    void bar() throws JOSEException {
-        var okp= new OctetKeyPairGenerator(Curve.Ed25519)
-                .keyID("did:example:dataspace-issuer#key-1")
+    void regenerate_issuer_keypair() throws JOSEException, IOException {
+        var okp = new OctetKeyPairGenerator(Curve.Ed25519)
+                .keyID("did:web:dataspace-issuer#key-1")
                 .generate();
 
-        System.out.println("Public key: ");
-        System.out.println(okp.toPublicJWK().toJSONString());
-        System.out.println("Private key: ");
-        System.out.println(okp.toJSONString());
+        var filePath = "%s/../../mxd/assets/issuer.key.jwk".formatted(System.getProperty("user.dir"));
+        Files.write(Path.of(filePath), okp.toJSONString().getBytes());
     }
 
 
