@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dd12461f-efbb-47c7-b6b5-74685b6fac64",
+		"_postman_id": "36c0d526-ba6d-4f3b-929f-abe8860ad0b1",
 		"name": "MXD Management API Seed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "647585"
@@ -59,6 +59,14 @@
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
 									"});"
 								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
 								"type": "text/javascript"
 							}
 						}
@@ -68,7 +76,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"1\",\n    \"description\": \"Product EDC Demo Asset 1\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"MXD Demo Asset 1\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -99,6 +107,14 @@
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
 									"});"
 								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
 								"type": "text/javascript"
 							}
 						}
@@ -108,7 +124,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"2\",\n    \"description\": \"Product EDC Demo Asset 2\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-2\",\n    \"description\": \"MXD Demo Asset 2\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -129,7 +145,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Policy",
+					"name": "Create \"requires membership credential\" policy",
 					"event": [
 						{
 							"listen": "test",
@@ -139,6 +155,14 @@
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
 									"});"
 								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
 								"type": "text/javascript"
 							}
 						}
@@ -148,7 +172,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"1\",\n    \"policy\": {\n\t\t\"@type\": \"odrl:Set\",\n\t\t\"odrl:permission\" : [{\n\t\t\t\"odrl:action\" : \"USE\",\n\t\t\t\"odrl:constraint\" : {\n\t\t\t\t\"@type\": \"LogicalConstraint\",\n\t\t\t\t\"odrl:or\" : [{\n\t\t\t\t\t\"@type\" : \"Constraint\",\n\t\t\t\t\t\"odrl:leftOperand\" : \"{{TX_NAMESPACE}}BusinessPartnerGroup\",\n\t\t\t\t\t\"odrl:operator\" : {\n                        \"@id\": \"odrl:eq\"\n                    },\n\t\t\t\t\t\"odrl:rightOperand\" : \"{{BUSINESS_PARTNER_GROUP}}\"\n\t\t\t\t}]\n\t\t\t}\n\t\t}]\n    }\n}",
+							"raw": "{\n    \"@context\": {\n        \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\n    },\n    \"@type\": \"PolicyDefinitionRequestDto\",\n    \"@id\": \"require-membership\",\n    \"policy\": {\n        \"@type\": \"http://www.w3.org/ns/odrl/2/Set\",\n        \"odrl:permission\": [\n            {\n                \"odrl:action\": \"use\",\n                \"odrl:constraint\": {\n                    \"@type\": \"LogicalConstraint\",\n                    \"odrl:leftOperand\": \"MembershipCredential\",\n                    \"odrl:operator\": {\n                        \"@id\": \"odrl:eq\"\n                    },\n                    \"odrl:rightOperand\": \"active\"\n                }\n            }\n        ]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -156,7 +180,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/v2/policydefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v3/policydefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
@@ -179,6 +203,14 @@
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
 									"});"
 								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
 								"type": "text/javascript"
 							}
 						}
@@ -188,7 +220,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"1\",\n    \"contractPolicyId\": \"1\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"1\"\n    }\n}",
+							"raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-membership\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"asset-1\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,7 +228,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/v2/contractdefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v3/contractdefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
@@ -219,6 +251,14 @@
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204, 409])",
 									"});"
 								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
 								"type": "text/javascript"
 							}
 						}
@@ -228,7 +268,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"2\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"1\",\n    \"contractPolicyId\": \"1\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"{{EDC_NAMESPACE}}id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"2\"\n    }\n}",
+							"raw": "{\n    \"@context\": {},\n    \"@id\": \"2\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-membership\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"asset-2\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -236,7 +276,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{MANAGEMENT_URL}}/v2/contractdefinitions",
+							"raw": "{{MANAGEMENT_URL}}/v3/contractdefinitions",
 							"host": [
 								"{{MANAGEMENT_URL}}"
 							],
