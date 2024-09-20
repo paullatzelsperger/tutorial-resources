@@ -161,7 +161,7 @@
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
-								"v2",
+								"v3",
 								"policydefinitions"
 							]
 						}
@@ -201,7 +201,7 @@
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
-								"v2",
+								"v3",
 								"contractdefinitions"
 							]
 						}
@@ -241,7 +241,7 @@
 								"{{MANAGEMENT_URL}}"
 							],
 							"path": [
-								"v2",
+								"v3",
 								"contractdefinitions"
 							]
 						}

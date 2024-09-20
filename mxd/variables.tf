@@ -42,7 +42,7 @@ variable "bob-did" {
 }
 
 variable "alice-did" {
-  default = "did:web:bob-ih%3A7083:bob"
+  default = "did:web:alice-ih%3A7083:alice"
 }
 
 variable "trudy-did" {

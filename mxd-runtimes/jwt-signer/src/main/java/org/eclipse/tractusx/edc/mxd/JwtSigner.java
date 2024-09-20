@@ -1,6 +1,5 @@
 package org.eclipse.tractusx.edc.mxd;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JOSEObjectType;
@@ -18,12 +17,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 
 public class JwtSigner {
 
+    public static final String DID_WEB_DATASPACE_ISSUER_KEY_ID = "did:web:dataspace-issuer#key-1";
     private static final String VC_TEMPLATE = """
             {
                         "@context": [
@@ -48,17 +49,13 @@ public class JwtSigner {
                         "issuanceDate": "2023-08-18T00:00:00Z",
                         "credentialSubject": {
                             "id": "%s",
-                            "membership": {
-                                "membershipType": "FullMember",
-                                "website": "www.whatever.com",
-                                "contact": "fizz.buzz@whatever.com",
-                                "since": "2023-01-01T00:00:00Z"
-                            }
+                            "holderIdentifier": "%s",
+                            "contractTemplate": "https://public.catena-x.org/contracts/Membership.v1.pdf",
+                            "contractVersion": "1.0.0"
                         }
                     }
             """;
     private static final Path rootDir = Paths.get(System.getProperty("user.dir"), "../../mxd/assets");
-    public static final String DID_WEB_DATASPACE_ISSUER_KEY_ID = "did:web:dataspace-issuer#key-1";
     private final ObjectMapper mapper = new ObjectMapper();
 
     public static void main(String[] args) throws Exception {
@@ -68,8 +65,17 @@ public class JwtSigner {
         System.out.println("Updating Issuer's DID document with new public key");
         jwtSigner.updateIssuerDid(issuerKey);
         System.out.println("Re-issue participant credentials");
-        jwtSigner.signCredential("did:web:alice-ih%3A7083:alice-ih%3A7084", "BPNL000000000001", "alice.membership.jwt", issuerKey);
-        jwtSigner.signCredential("did:web:bob-ih%3A7083:bob-ih%3A7084", "BPNL000000000002", "bob.membership.jwt", issuerKey);
+        jwtSigner.signCredential("did:web:alice-ih%3A7083:alice", "BPNL000000000001", "alice.membership.jwt", issuerKey);
+        jwtSigner.signCredential("did:web:bob-ih%3A7083:bob", "BPNL000000000002", "bob.membership.jwt", issuerKey);
+
+        jwtSigner.verify("alice.membership.jwt", issuerKey.toPublicJWK());
+        jwtSigner.verify("bob.membership.jwt", issuerKey.toPublicJWK());
+    }
+
+    private void verify(String credentialName, JWK issuerKey) throws IOException, ParseException, JOSEException {
+        var jwt = SignedJWT.parse(Files.readString(rootDir.resolve(credentialName)));
+
+        jwt.verify(CryptoConverter.createVerifier(issuerKey));
     }
 
     private JWK regenerateIssuerKey() throws JOSEException, IOException {
@@ -89,7 +95,7 @@ public class JwtSigner {
         var didPath = rootDir.resolve("issuer.did.json");
         var doc = mapper.readValue(didPath.toFile(), DidDocument.class);
 
-        var jwk = newKey.toJSONObject();
+        var jwk = newKey.toPublicJWK().toJSONObject();
 
         var publicKeyJwk = doc.getVerificationMethod().stream()
                 .findFirst()
@@ -108,7 +114,7 @@ public class JwtSigner {
                 .build();
 
 
-        var credential = mapper.readValue(VC_TEMPLATE.formatted(participantId), Map.class);
+        var credential = mapper.readValue(VC_TEMPLATE.formatted(did, participantId), Map.class);
 
         var claims = new JWTClaimsSet.Builder()
                 .audience(did)
