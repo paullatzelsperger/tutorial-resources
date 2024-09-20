@@ -32,7 +32,7 @@ edc-ext-jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
 edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
 edc-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
 edc-http-lib = { module = "org.eclipse.edc:http-lib", version.ref = "edc" }
-
+edc-spi-did = {module= "org.eclipse.edc:did-spi", version.ref="edc"}
 
 # identith-hub SPI modules
 edc-ih-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }

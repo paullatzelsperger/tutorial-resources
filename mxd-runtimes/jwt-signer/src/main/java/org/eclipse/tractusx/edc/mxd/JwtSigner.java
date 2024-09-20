@@ -1,0 +1,128 @@
+package org.eclipse.tractusx.edc.mxd;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.jwk.Curve;
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.gen.OctetKeyPairGenerator;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import org.eclipse.edc.iam.did.spi.document.DidDocument;
+import org.eclipse.edc.security.token.jwt.CryptoConverter;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Map;
+
+public class JwtSigner {
+
+    private static final String VC_TEMPLATE = """
+            {
+                        "@context": [
+                            "https://www.w3.org/2018/credentials/v1",
+                            "https://w3id.org/security/suites/jws-2020/v1",
+                            "https://www.w3.org/ns/did/v1",
+                            {
+                                "mxd-credentials": "https://w3id.org/mxd/credentials/",
+                                "membership": "mxd-credentials:membership",
+                                "membershipType": "mxd-credentials:membershipType",
+                                "website": "mxd-credentials:website",
+                                "contact": "mxd-credentials:contact",
+                                "since": "mxd-credentials:since"
+                            }
+                        ],
+                        "id": "http://org.yourdataspace.com/credentials/2347",
+                        "type": [
+                            "VerifiableCredential",
+                            "MembershipCredential"
+                        ],
+                        "issuer": "did:web:dataspace-issuer",
+                        "issuanceDate": "2023-08-18T00:00:00Z",
+                        "credentialSubject": {
+                            "id": "%s",
+                            "membership": {
+                                "membershipType": "FullMember",
+                                "website": "www.whatever.com",
+                                "contact": "fizz.buzz@whatever.com",
+                                "since": "2023-01-01T00:00:00Z"
+                            }
+                        }
+                    }
+            """;
+    private static final Path rootDir = Paths.get(System.getProperty("user.dir"), "../../mxd/assets");
+    public static final String DID_WEB_DATASPACE_ISSUER_KEY_ID = "did:web:dataspace-issuer#key-1";
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    public static void main(String[] args) throws Exception {
+        var jwtSigner = new JwtSigner();
+        System.out.println("Generating Issuer Key Pair");
+        var issuerKey = jwtSigner.regenerateIssuerKey();
+        System.out.println("Updating Issuer's DID document with new public key");
+        jwtSigner.updateIssuerDid(issuerKey);
+        System.out.println("Re-issue participant credentials");
+        jwtSigner.signCredential("did:web:alice-ih%3A7083:alice-ih%3A7084", "BPNL000000000001", "alice.membership.jwt", issuerKey);
+        jwtSigner.signCredential("did:web:bob-ih%3A7083:bob-ih%3A7084", "BPNL000000000002", "bob.membership.jwt", issuerKey);
+    }
+
+    private JWK regenerateIssuerKey() throws JOSEException, IOException {
+        var okp = new OctetKeyPairGenerator(Curve.Ed25519)
+                .keyID(DID_WEB_DATASPACE_ISSUER_KEY_ID)
+                .generate();
+
+        var filePath = rootDir.resolve("issuer.key.json");
+        Files.write(filePath, okp.toJSONString().getBytes());
+
+        var filePath2 = rootDir.resolve("issuer.pub.json");
+        Files.write(filePath2, okp.toPublicJWK().toJSONString().getBytes());
+        return okp;
+    }
+
+    private void updateIssuerDid(JWK newKey) throws IOException {
+        var didPath = rootDir.resolve("issuer.did.json");
+        var doc = mapper.readValue(didPath.toFile(), DidDocument.class);
+
+        var jwk = newKey.toJSONObject();
+
+        var publicKeyJwk = doc.getVerificationMethod().stream()
+                .findFirst()
+                .orElseThrow()
+                .getPublicKeyJwk();
+        publicKeyJwk.clear();
+        publicKeyJwk.putAll(jwk);
+
+        mapper.writeValue(didPath.toFile(), doc);
+    }
+
+    private void signCredential(String did, String participantId, String name, JWK signingKey) throws JOSEException, IOException {
+        var header = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
+                .keyID(DID_WEB_DATASPACE_ISSUER_KEY_ID)
+                .type(JOSEObjectType.JWT)
+                .build();
+
+
+        var credential = mapper.readValue(VC_TEMPLATE.formatted(participantId), Map.class);
+
+        var claims = new JWTClaimsSet.Builder()
+                .audience(did)
+                .subject(did)
+                .issuer("did:web:dataspace-issuer")
+                .claim("vc", credential)
+                .issueTime(Date.from(Instant.now()))
+                .build();
+
+        var jwt = new SignedJWT(header, claims);
+        jwt.sign(CryptoConverter.createSigner(signingKey));
+
+        var filePath = rootDir.resolve(name);
+        Files.write(filePath, jwt.serialize().getBytes());
+    }
+
+}

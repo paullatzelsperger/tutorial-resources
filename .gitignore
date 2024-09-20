@@ -46,3 +46,4 @@ mxd/backend-service/.gradle
 .bin
 mxd/backend-service/build
 *.log
+/mxd-runtimes/jwt-signer/out/

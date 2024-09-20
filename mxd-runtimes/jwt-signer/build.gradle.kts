@@ -20,22 +20,10 @@ plugins {
 
 dependencies {
 
-    runtimeOnly(libs.bundles.identityhub)
-//    runtimeOnly(libs.edc.api.observability)
-
-//    runtimeOnly(libs.edc.vault.hashicorp)
-//    runtimeOnly(libs.bundles.sql.ih)
-
-//    runtimeOnly(libs.bundles.identity.api)
-
-//    implementation(libs.bundles.did)
-//    runtimeOnly(libs.bundles.connector)
-//    runtimeOnly(libs.edc.ih.spi.store)
-//    runtimeOnly(libs.edc.ih.lib.credentialquery)
-
-    testImplementation(libs.edc.lib.crypto)
-    testImplementation(libs.edc.lib.keys)
-    testImplementation(libs.edc.junit)
+    implementation(libs.edc.spi.did)
+    implementation(libs.edc.lib.crypto)
+    implementation(libs.edc.lib.keys)
+    implementation(libs.edc.junit)
 }
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
@@ -44,5 +32,5 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
 }
 
 application {
-    mainClass.set("org.eclipse.edc.boot.system.runtime.BaseRuntime")
+    mainClass.set("org.eclipse.tractusx.edc.mxd.JwtSigner")
 }
