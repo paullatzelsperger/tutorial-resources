@@ -65,8 +65,8 @@ public class JwtSigner {
         System.out.println("Updating Issuer's DID document with new public key");
         jwtSigner.updateIssuerDid(issuerKey);
         System.out.println("Re-issue participant credentials");
-        jwtSigner.signCredential("did:web:alice-ih%3A7083:alice", "BPNL000000000001", "alice.membership.jwt", issuerKey);
-        jwtSigner.signCredential("did:web:bob-ih%3A7083:bob", "BPNL000000000002", "bob.membership.jwt", issuerKey);
+        jwtSigner.signMembershipCredential("did:web:alice-ih%3A7083:alice", "BPNL000000000001", "alice.membership.jwt", issuerKey);
+        jwtSigner.signMembershipCredential("did:web:bob-ih%3A7083:bob", "BPNL000000000002", "bob.membership.jwt", issuerKey);
 
         jwtSigner.verify("alice.membership.jwt", issuerKey.toPublicJWK());
         jwtSigner.verify("bob.membership.jwt", issuerKey.toPublicJWK());
@@ -107,7 +107,7 @@ public class JwtSigner {
         mapper.writeValue(didPath.toFile(), doc);
     }
 
-    private void signCredential(String did, String participantId, String name, JWK signingKey) throws JOSEException, IOException {
+    private void signMembershipCredential(String did, String participantId, String name, JWK signingKey) throws JOSEException, IOException {
         var header = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
                 .keyID(DID_WEB_DATASPACE_ISSUER_KEY_ID)
                 .type(JOSEObjectType.JWT)
