@@ -25,7 +25,7 @@ import java.util.Map;
 public class JwtSigner {
 
     public static final String DID_WEB_DATASPACE_ISSUER_KEY_ID = "did:web:dataspace-issuer#key-1";
-    private static final String VC_TEMPLATE = """
+    private static final String MEMBERSHIP_CREDENTIAL_TEMPLATE = """
             {
                         "@context": [
                             "https://www.w3.org/2018/credentials/v1",
@@ -55,6 +55,33 @@ public class JwtSigner {
                         }
                     }
             """;
+
+    private static final String FRAMEWORK_CREDENTIAL_TEMPLATE = """
+            {
+              "@context": [
+                "https://www.w3.org/2018/credentials/v1",
+                "https://w3id.org/catenax/credentials/v1.0.0"
+              ],
+              "id": "1f36af58-0fc0-4b24-9b1c-e37d59668089",
+              "type": [
+                "VerifiableCredential",
+                "DataExchangeGovernanceCredential"
+              ],
+              "issuer": "did:web:com.example.issuer",
+              "issuanceDate": "2021-06-16T18:56:59Z",
+              "expirationDate": "2022-06-16T18:56:59Z",
+              "credentialSubject":
+              {
+                "id": "%s",
+                "holderIdentifier": "%s",
+                "group": "UseCaseFramework",
+                "useCase": "DataExchangeGovernance",
+                "contractTemplate": "https://catena-x.net/en/catena-x-introduce-implement/governance-framework-for-data-space-operations",
+                "contractVersion": "a.b"
+              }
+            }
+            
+            """;
     private static final Path rootDir = Paths.get(System.getProperty("user.dir"), "../../mxd/assets");
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -66,7 +93,9 @@ public class JwtSigner {
         jwtSigner.updateIssuerDid(issuerKey);
         System.out.println("Re-issue participant credentials");
         jwtSigner.signMembershipCredential("did:web:alice-ih%3A7083:alice", "BPNL000000000001", "alice.membership.jwt", issuerKey);
+        jwtSigner.signFrameworkCredential("did:web:alice-ih%3A7083:alice", "BPNL000000000001", "alice.dataexchangegov.jwt", issuerKey);
         jwtSigner.signMembershipCredential("did:web:bob-ih%3A7083:bob", "BPNL000000000002", "bob.membership.jwt", issuerKey);
+        jwtSigner.signFrameworkCredential("did:web:bob-ih%3A7083:bob", "BPNL000000000002", "bob.dataexchangegov.jwt", issuerKey);
 
         jwtSigner.verify("alice.membership.jwt", issuerKey.toPublicJWK());
         jwtSigner.verify("bob.membership.jwt", issuerKey.toPublicJWK());
@@ -108,13 +137,21 @@ public class JwtSigner {
     }
 
     private void signMembershipCredential(String did, String participantId, String name, JWK signingKey) throws JOSEException, IOException {
+        signCredential(did, participantId, name, signingKey, MEMBERSHIP_CREDENTIAL_TEMPLATE);
+    }
+
+    private void signFrameworkCredential(String did, String participantId, String name, JWK signingKey) throws JOSEException, IOException {
+        signCredential(did, participantId, name, signingKey, FRAMEWORK_CREDENTIAL_TEMPLATE);
+    }
+
+    private void signCredential(String did, String participantId, String name, JWK signingKey, String credentialTemplate) throws JOSEException, IOException {
         var header = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
                 .keyID(DID_WEB_DATASPACE_ISSUER_KEY_ID)
                 .type(JOSEObjectType.JWT)
                 .build();
 
 
-        var credential = mapper.readValue(VC_TEMPLATE.formatted(did, participantId), Map.class);
+        var credential = mapper.readValue(credentialTemplate.formatted(did, participantId), Map.class);
 
         var claims = new JWTClaimsSet.Builder()
                 .audience(did)
