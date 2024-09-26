@@ -33,8 +33,16 @@ dependencyResolutionManagement {
         }
         mavenCentral()
     }
+    // this version catalog is separate because it is supposed to be temporary. Once T-X provides a dedicated CatalogServer
+    // runtime, it can be replaced with a dependency on that
+    versionCatalogs {
+        create("catalogLibs") {
+            from(files("./gradle/catalogserver.versions.toml"))
+        }
+    }
 }
 
 include(":tx-identityhub")
+include(":tx-catalog-server")
 include(":backend-service")
 include(":jwt-signer")

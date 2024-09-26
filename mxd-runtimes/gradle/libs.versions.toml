@@ -72,6 +72,8 @@ edc-sts = { module = "org.eclipse.edc:identity-trust-sts-embedded", version.ref 
 edc-sts-api = { module = "org.eclipse.edc:identity-trust-sts-api", version.ref = "edc" }
 edc-sts-accountprovisioner = { module = "org.eclipse.edc:sts-account-provisioner", version.ref = "edc" }
 
+
+
 # third-party libraries
 postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
