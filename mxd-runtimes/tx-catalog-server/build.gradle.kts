@@ -28,6 +28,8 @@ configurations.all {
 dependencies {
 
     runtimeOnly(libs.bundles.connector) // base runtime
+    runtimeOnly(catalogLibs.api.management)
+    runtimeOnly(catalogLibs.api.management.config)
     runtimeOnly(catalogLibs.controlplane.core) //default store impls, etc.
     runtimeOnly(catalogLibs.controlplane.services) // aggregate services
     runtimeOnly(catalogLibs.dsp) // protocol webhook

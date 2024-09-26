@@ -79,16 +79,33 @@ module "alice-connector" {
 module "alice-identityhub" {
   source = "./modules/identity-hub"
   database = {
-    user = local.databases.alice.database-username
+    user     = local.databases.alice.database-username
     password = local.databases.alice.database-password
-    url = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
+    url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
   }
   humanReadableName = "alice-ih"
-  namespace = "default"
-  participantId = var.alice-did
-  vault-url = "http://alice-vault:8200"
-  url-path = "alice-ih"
+  namespace         = "default"
+  participantId     = var.alice-did
+  vault-url         = "http://alice-vault:8200"
+  url-path          = "alice-ih"
 }
+
+# alice's catalog server
+module "alice-catalog-server" {
+  source            = "./modules/catalog-server"
+  humanReadableName = "alice-cs"
+  namespace         = "default"
+  sts-token-url     = "http://alice-ih:7084/api/credentials/token"
+  participantId     = var.alice-bpn
+  vault-url         = "http://alice-vault:8200"
+  bdrs-url          = "http://bdrs-server:8082/api/directory"
+  database = {
+    user     = local.databases.alice.database-username
+    password = local.databases.alice.database-password
+    url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
+  }
+}
+
 
 # Second connector
 module "bob-connector" {
@@ -127,15 +144,15 @@ module "bob-connector" {
 module "bob-identityhub" {
   source = "./modules/identity-hub"
   database = {
-    user = local.databases.bob.database-username
+    user     = local.databases.bob.database-username
     password = local.databases.bob.database-password
-    url = "jdbc:postgresql://${local.bob-postgres.database-host}/${local.databases.bob.database-name}"
+    url      = "jdbc:postgresql://${local.bob-postgres.database-host}/${local.databases.bob.database-name}"
   }
   humanReadableName = "bob-ih"
-  namespace = "default"
-  participantId = var.bob-did
-  vault-url = "http://bob-vault:8200"
-  url-path = "bob-ih"
+  namespace         = "default"
+  participantId     = var.bob-did
+  vault-url         = "http://bob-vault:8200"
+  url-path          = "bob-ih"
 }
 
 module "azurite" {
