@@ -19,7 +19,8 @@
 
 resource "kubernetes_ingress_v1" "mxd-ingress" {
   metadata {
-    name = "${var.humanReadableName}-connector-ingress"
+    name      = "${var.humanReadableName}-connector-ingress"
+    namespace = var.namespace
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/$2"
       "nginx.ingress.kubernetes.io/use-regex"      = "true"

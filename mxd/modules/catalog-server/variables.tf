@@ -32,7 +32,9 @@ variable "participantId" {
 }
 
 variable "namespace" {
-  type = string
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
 }
 
 variable "ports" {
@@ -102,6 +104,6 @@ variable "aliases" {
 }
 
 locals {
-  name = lower(var.humanReadableName)
+  name         = lower(var.humanReadableName)
   service-name = "${var.humanReadableName}-service"
 }

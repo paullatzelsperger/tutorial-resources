@@ -22,6 +22,11 @@ variable "postgres-port" {
   default = 5432
 }
 
+variable "namespace" {
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
+}
 
 
 variable "alice-bpn" {

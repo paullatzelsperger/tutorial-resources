@@ -25,11 +25,12 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
   // wait until the connectors are running, otherwise terraform may report an error
   depends_on = [module.alice-connector, module.bob-connector]
   metadata {
-    name = "seed-connectors"
+    name      = "seed-connectors"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
   spec {
     // run only once
-    completions                = 1
+    completions     = 1
     completion_mode = "NonIndexed"
     // clean up any job pods after 90 seconds, failed or succeeded
     ttl_seconds_after_finished = "90"
@@ -104,7 +105,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "CONTROL_PLANE_HOST=alice-controlplane",
             "--env-var", "PARTICIPANT_CONTEXT_ID=participant-alice",
             "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYWxpY2U=",
-            "--env-var", "IDENTITYHUB_URL=http://alice-ih:${module.alice-identityhub.ports.presentation-api}/api/presentation",
+            "--env-var",
+            "IDENTITYHUB_URL=http://alice-ih:${module.alice-identityhub.ports.presentation-api}/api/presentation",
             "--env-var", "MEMBERSHIP_CREDENTIAL=${file("${path.module}/assets/alice.membership.jwt")}",
             "--env-var", "FRAMEWORK_CREDENTIAL=${file("${path.module}/assets/alice.dataexchangegov.jwt")}",
             "--env-var", "BPN=${var.alice-bpn}",
@@ -128,7 +130,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
             "--env-var", "CONTROL_PLANE_HOST=bob-controlplane",
             "--env-var", "PARTICIPANT_CONTEXT_ID=participant-bob",
             "--env-var", "PARTICIPANT_CONTEXT_ID_BASE64=cGFydGljaXBhbnQtYm9i",
-            "--env-var", "IDENTITYHUB_URL=http://bob-ih:${module.bob-identityhub.ports.presentation-api}/api/presentation",
+            "--env-var",
+            "IDENTITYHUB_URL=http://bob-ih:${module.bob-identityhub.ports.presentation-api}/api/presentation",
             "--env-var", "MEMBERSHIP_CREDENTIAL=${file("${path.module}/assets/bob.membership.jwt")}",
             "--env-var", "FRAMEWORK_CREDENTIAL=${file("${path.module}/assets/bob.dataexchangegov.jwt")}",
             "--env-var", "BPN=${var.bob-bpn}",
@@ -154,7 +157,8 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
 
 resource "kubernetes_config_map" "seed-collection" {
   metadata {
-    name = "seed-collection"
+    name      = "seed-collection"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
   data = {
     (local.newman_collection_name) = file("./postman/mxd-seed.json")

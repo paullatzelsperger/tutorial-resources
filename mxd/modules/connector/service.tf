@@ -22,7 +22,8 @@
 
 resource "kubernetes_service" "controlplane-service" {
   metadata {
-    name = "${var.humanReadableName}-controlplane"
+    name      = "${var.humanReadableName}-controlplane"
+    namespace = var.namespace
   }
   spec {
     type = "NodePort"

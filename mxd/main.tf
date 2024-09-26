@@ -44,7 +44,7 @@ provider "helm" {
 
 # First connector
 module "alice-connector" {
-  depends_on = [module.azurite]
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "alice"
   participantId     = var.alice-bpn
@@ -84,7 +84,7 @@ module "alice-identityhub" {
     url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
   }
   humanReadableName = "alice-ih"
-  namespace         = "default"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-did
   vault-url         = "http://alice-vault:8200"
   url-path          = "alice-ih"
@@ -94,7 +94,7 @@ module "alice-identityhub" {
 module "alice-catalog-server" {
   source            = "./modules/catalog-server"
   humanReadableName = "alice-cs"
-  namespace         = "default"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-bpn
   vault-url         = "http://alice-vault:8200"
   bdrs-url          = "http://bdrs-server:8082/api/directory"
@@ -114,9 +114,10 @@ module "alice-catalog-server" {
 
 # Second connector
 module "bob-connector" {
-  depends_on = [module.azurite]
+  depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "bob"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.bob-bpn
   database-host     = local.bob-postgres.database-host
   database-name     = local.databases.bob.database-name
@@ -154,7 +155,7 @@ module "bob-identityhub" {
     url      = "jdbc:postgresql://${local.bob-postgres.database-host}/${local.databases.bob.database-name}"
   }
   humanReadableName = "bob-ih"
-  namespace         = "default"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.bob-did
   vault-url         = "http://bob-vault:8200"
   url-path          = "bob-ih"
@@ -162,11 +163,18 @@ module "bob-identityhub" {
 
 module "azurite" {
   source           = "./modules/azurite"
+  namespace        = kubernetes_namespace.mxd-ns.metadata.0.name
   azurite-accounts = "${var.alice-azure-account-name}:${local.alice-azure-key-base64};${var.bob-azure-account-name}:${local.bob-azure-key-base64};${var.trudy-azure-account-name}:${local.trudy-azure-key-base64};"
 }
 
 locals {
   alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
-  bob-azure-key-base64 = base64encode(var.bob-azure-account-key)
+  bob-azure-key-base64   = base64encode(var.bob-azure-account-key)
   trudy-azure-key-base64 = base64encode(var.trudy-azure-account-key)
+}
+
+resource "kubernetes_namespace" "mxd-ns" {
+  metadata {
+    name = var.namespace
+  }
 }

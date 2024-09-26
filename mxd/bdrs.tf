@@ -15,6 +15,7 @@
 
 resource "helm_release" "bdrs-server" {
   name              = "bdrs-server"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   force_update      = true
   dependency_update = true
   reuse_values      = true

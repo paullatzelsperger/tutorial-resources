@@ -30,7 +30,8 @@ module "postgres" {
 resource "kubernetes_config_map" "postgres-initdb-config" {
   for_each = tomap(local.databases)
   metadata {
-    name = "${each.key}-initdb-config"
+    name      = "${each.key}-initdb-config"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
 
   data = {
@@ -47,9 +48,9 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 }
 
 locals {
-  bdrs-postgres           = module.postgres["bdrs"]
-  alice-postgres          = module.postgres["alice"]
-  bob-postgres            = module.postgres["bob"]
+  bdrs-postgres  = module.postgres["bdrs"]
+  alice-postgres = module.postgres["alice"]
+  bob-postgres   = module.postgres["bob"]
   # trudy-postgres          =  module.postgres["trudy"]
   backendservice-postgres = module.postgres["backendservice"]
 

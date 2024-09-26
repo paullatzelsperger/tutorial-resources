@@ -13,7 +13,7 @@
 
 resource "kubernetes_deployment" "identityhub" {
   metadata {
-    name = lower(var.humanReadableName)
+    name      = lower(var.humanReadableName)
     namespace = var.namespace
     labels = {
       App = lower(var.humanReadableName)
@@ -141,7 +141,7 @@ resource "kubernetes_config_map" "identityhub-config" {
     EDC_DATASOURCE_DEFAULT_USER     = var.database.user
     EDC_DATASOURCE_DEFAULT_PASSWORD = var.database.password
     EDC_SQL_SCHEMA_AUTOCREATE       = true
-    EDC_IAM_DID_WEB_USE_HTTPS="false"
+    EDC_IAM_DID_WEB_USE_HTTPS       = "false"
   }
 }
 

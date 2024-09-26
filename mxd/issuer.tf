@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "dataspace-issuer-did-server" {
   metadata {
-    name = "dataspace-issuer-server"
-    # namespace = var.namespace
+    name      = "dataspace-issuer-server"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
     labels = {
       App = "dataspace-issuer-server"
     }
@@ -61,7 +61,8 @@ resource "kubernetes_deployment" "dataspace-issuer-did-server" {
 
 resource "kubernetes_service" "dataspace-issuer-did-server-service" {
   metadata {
-    name = "dataspace-issuer" # this must correlate with the Issuer's DID: did:web:dataspace-issuer -> http://dataspace-issuer/.well-known/did.json
+    name      = "dataspace-issuer" # this must correlate with the Issuer's DID: did:web:dataspace-issuer -> http://dataspace-issuer/.well-known/did.json
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
   spec {
     type = "NodePort"
@@ -78,11 +79,12 @@ resource "kubernetes_service" "dataspace-issuer-did-server-service" {
 
 resource "kubernetes_config_map" "nginx-map" {
   metadata {
-    name = "nginx-conf"
+    name      = "nginx-conf"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
   }
 
   data = {
     "nginx.conf" = file("${path.cwd}/assets/nginx.conf")
-    "did.json" = file("${path.cwd}/assets/issuer.did.json")
+    "did.json"   = file("${path.cwd}/assets/issuer.did.json")
   }
 }

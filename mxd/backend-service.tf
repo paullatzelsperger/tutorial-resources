@@ -20,7 +20,8 @@
 resource "kubernetes_deployment" "backend-service" {
 
   metadata {
-    name = "backend-service"
+    name      = "backend-service"
+    namespace = kubernetes_namespace.mxd-ns.metadata.0.name
     labels = {
       App = "backend-service"
     }

@@ -17,6 +17,12 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
+variable "namespace" {
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
+}
+
 variable "image-pull-policy" {
   default     = "Always"
   type        = string

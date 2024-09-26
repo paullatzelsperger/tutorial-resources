@@ -32,9 +32,10 @@ variable "participantId" {
 }
 
 variable "namespace" {
-  type = string
+  type        = string
+  description = "Kubernetes namespace to use"
+  default     = "mxd"
 }
-
 variable "ports" {
   type = object({
     web              = number
