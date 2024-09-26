@@ -18,14 +18,14 @@
 #
 
 module "minio" {
-  source            = "../minio"
+  source         = "../minio"
   humanReadableName = lower(var.humanReadableName)
-  minio-username    = var.minio-config.minio-username
-  minio-password    = var.minio-config.minio-password
+  minio-username = var.minio-config.minio-username
+  minio-password = var.minio-config.minio-password
 }
 
 resource "helm_release" "connector" {
-  name              = lower(var.humanReadableName)
+  name = lower(var.humanReadableName)
   namespace         = var.namespace
   force_update      = true
   dependency_update = true
@@ -58,6 +58,29 @@ resource "helm_release" "connector" {
       }
     }),
     yamlencode({
+      controlplane : {
+        volumeMounts : [{
+          name : "participants"
+          mountPath : "/app/participants.json"
+          subPath : "participants.json"
+        }]
+
+        volumes : [{
+          name : "participants"
+          configMap : {
+            name : kubernetes_config_map.participants-map.metadata[0].name
+            items : [
+              {
+                key : "participants.json"
+                path : "participants.json"
+              }
+            ]
+          }
+        }]
+      }
+    }
+    ),
+    yamlencode({
       iatp : {
         id : var.dcp-config.id
         sts : {
@@ -85,6 +108,15 @@ resource "helm_release" "connector" {
         bdrs : {
           server : {
             url : "http://bdrs-server:8082/api/directory"
+          }
+        }
+        catalog : {
+          enabled : true
+          crawler : {
+          #   num : 1
+            period : 10
+            initialDelay : 10
+            targetsFile: "/app/participants.json"
           }
         }
       }
@@ -143,11 +175,20 @@ resource "helm_release" "connector" {
 
 }
 
+resource "kubernetes_config_map" "participants-map" {
+  metadata {
+    name      = "${var.humanReadableName}-participants"
+    namespace = var.namespace
+  }
 
+  data = {
+    "participants.json" = file(var.participant-list-file)
+  }
+}
 
 locals {
   jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
-  azure-sas-token                 = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
+  azure-sas-token = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
   minio-url                       = module.minio.minio-url
 }

@@ -58,6 +58,12 @@ variable "database-credentials" {
   }
 }
 
+variable "participant-list-file" {
+  type    = string
+  default = "./assets/participants.json"
+}
+
+
 variable "dcp-config" {
   type = object({
     id                     = string

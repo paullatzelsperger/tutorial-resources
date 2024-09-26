@@ -43,6 +43,7 @@ dependencies {
     runtimeOnly(catalogLibs.bdrs.client) // audience mapper
     runtimeOnly(catalogLibs.tx.dcp) // the default scope mapper
     runtimeOnly(catalogLibs.config.trustedissuers) // to configure the trusted issuers via config
+    runtimeOnly(catalogLibs.tx.fc) // file-based node directory
 
     runtimeOnly(libs.edc.did.core) // DidResolverRegistry, DidPublicKeyResolver
     runtimeOnly(libs.edc.did.web) // for registering the WebDidResolver
