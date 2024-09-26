@@ -117,13 +117,13 @@ resource "kubernetes_config_map" "catalog-server-config" {
 
   ## Create databases for keycloak and MIW, create users and assign privileges
   data = {
-    EDC_IAM_ISSUER_ID               = var.participantId
+    EDC_IAM_ISSUER_ID               = var.dcp-config.id
     EDC_IAM_DID_WEB_USE_HTTPS       = false
     WEB_HTTP_PORT                   = var.ports.web
     WEB_HTTP_PATH                   = "/api"
     WEB_HTTP_PROTOCOL_PORT          = var.ports.protocol
     WEB_HTTP_PROTOCOL_PATH          = "/api/dsp"
-    WEB_HTTP_MANAGEMENT_PORT         = var.ports.management
+    WEB_HTTP_MANAGEMENT_PORT        = var.ports.management
     WEB_HTTP_MANAGEMENT_PATH        = "/api/management"
     EDC_DSP_CALLBACK_ADDRESS        = "http://${local.service-name}:${var.ports.protocol}/api/dsp"
     EDC_IAM_STS_PRIVATEKEY_ALIAS    = "${var.participantId}#${var.aliases.sts-private-key}"
@@ -141,8 +141,12 @@ resource "kubernetes_config_map" "catalog-server-config" {
     EDC_SQL_SCHEMA_AUTOCREATE = true
 
     # remote STS configuration
-    EDC_IAM_STS_OAUTH_TOKEN_URL           = var.sts-token-url
-    EDC_IAM_STS_OAUTH_CLIENT_ID           = var.participantId
-    EDC_IAM_STS_OAUTH_CLIENT_SECRET_ALIAS = "${var.participantId}-sts-client-secret"
+    EDC_IAM_STS_OAUTH_TOKEN_URL           = var.dcp-config.sts_token_url
+    EDC_IAM_STS_OAUTH_CLIENT_ID           = var.dcp-config.sts_client_id
+    EDC_IAM_STS_OAUTH_CLIENT_SECRET_ALIAS = var.dcp-config.sts_clientsecret_alias
+
+    EDC_IAM_DID_WEB_USE_HTTPS                              = "false"
+    EDC_IAM_TRUSTED-ISSUER_DATASPACE-ISSUER_ID             = "did:web:dataspace-issuer"
+    EDC_IAM_TRUSTED-ISSUER_DATASPACE-ISSUER_SUPPORTEDTYPES = "[\"*\"]"
   }
 }

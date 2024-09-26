@@ -41,8 +41,11 @@ dependencies {
 //    runtimeOnly(libs.bundles.sql.edc)
     runtimeOnly(catalogLibs.sts.remote.client)
     runtimeOnly(catalogLibs.bdrs.client) // audience mapper
+    runtimeOnly(catalogLibs.tx.dcp) // the default scope mapper
+    runtimeOnly(catalogLibs.config.trustedissuers) // to configure the trusted issuers via config
 
     runtimeOnly(libs.edc.did.core) // DidResolverRegistry, DidPublicKeyResolver
+    runtimeOnly(libs.edc.did.web) // for registering the WebDidResolver
     runtimeOnly(catalogLibs.oauth2.client)
 }
 

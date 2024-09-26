@@ -95,7 +95,6 @@ module "alice-catalog-server" {
   source            = "./modules/catalog-server"
   humanReadableName = "alice-cs"
   namespace         = "default"
-  sts-token-url     = "http://alice-ih:7084/api/credentials/token"
   participantId     = var.alice-bpn
   vault-url         = "http://alice-vault:8200"
   bdrs-url          = "http://bdrs-server:8082/api/directory"
@@ -103,6 +102,12 @@ module "alice-catalog-server" {
     user     = local.databases.alice.database-username
     password = local.databases.alice.database-password
     url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
+  }
+  dcp-config = {
+    id                     = var.alice-did
+    sts_token_url          = "http://alice-ih:7084/api/credentials/token"
+    sts_client_id          = var.alice-did
+    sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
 }
 

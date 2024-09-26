@@ -22,8 +22,11 @@ jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
 oauth2-client = { module = "org.eclipse.edc:oauth2-client", version.ref = "edc" }
 sts-remote-client = { module = "org.eclipse.edc:identity-trust-sts-remote-client", version.ref = "edc" }
 
+config-trustedissuers= { module = "org.eclipse.edc:identity-trust-issuers-configuration", version.ref = "edc" }
+
 # tx modules
 bdrs-client = { module = "org.eclipse.tractusx.edc:bdrs-client", version.ref = "tractusx" }
+tx-dcp = { module = "org.eclipse.tractusx.edc:tx-dcp", version.ref = "tractusx" }
 
 [bundles]
 

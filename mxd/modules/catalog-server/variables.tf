@@ -69,14 +69,25 @@ variable "vault-url" {
   type        = string
 }
 
-variable "sts-token-url" {
-  description = "Full URL of the STS token endpoint"
-  type        = string
-}
-
 variable "bdrs-url" {
   description = "URL of the BDRS Service"
   type        = string
+}
+
+
+variable "dcp-config" {
+  type = object({
+    id                     = string
+    sts_token_url          = string
+    sts_client_id          = string
+    sts_clientsecret_alias = string
+  })
+  default = {
+    id                     = ""
+    sts_token_url          = ""
+    sts_client_id          = ""
+    sts_clientsecret_alias = ""
+  }
 }
 
 variable "aliases" {
