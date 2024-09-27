@@ -39,31 +39,14 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
         name = "seed-connectors"
       }
       spec {
-        // this container seeds data to the BOB connector
-        container {
-          name  = "newman-bob"
-          image = "postman/newman:ubuntu"
-          command = [
-            "newman", "run",
-            "--folder", "SeedData",
-            "--env-var", "MANAGEMENT_URL=http://${module.bob-connector.node-ip}:8081/management",
-            "--env-var", "POLICY_BPN=${var.alice-bpn}",
-            "/opt/collection/${local.newman_collection_name}"
-          ]
-          volume_mount {
-            mount_path = "/opt/collection"
-            name       = "seed-collection"
-          }
-        }
         // this container seeds data to the ALICE connector
         container {
-          name  = "newman-alice"
+          name  = "seed-alice-connector"
           image = "postman/newman:ubuntu"
           command = [
             "newman", "run",
             "--folder", "SeedData",
             "--env-var", "MANAGEMENT_URL=http://${module.alice-connector.node-ip}:8081/management",
-            "--env-var", "POLICY_BPN=${var.bob-bpn}",
             "/opt/collection/${local.newman_collection_name}"
           ]
           volume_mount {
@@ -73,7 +56,24 @@ resource "kubernetes_job" "seed_connectors_via_mgmt_api" {
         }
 
         container {
-          name  = "newman-bdrs"
+          name  = "seed-alice-catalogserver"
+          image = "postman/newman:ubuntu"
+          command = [
+            "newman", "run",
+            "--folder", "SeedCatalogServer",
+            "--env-var", "MANAGEMENT_URL=http://${module.alice-catalog-server.management-endpoint}/api/management",
+            "--env-var", "PROVIDER_DSP_ENDPOINT=http://alice-controlplane:8084/api/v1/dsp",
+            "/opt/collection/${local.newman_collection_name}"
+          ]
+          volume_mount {
+            mount_path = "/opt/collection"
+            name       = "seed-collection"
+          }
+        }
+
+        // seed the BDRS Server
+        container {
+          name  = "seed-bdrs"
           image = "postman/newman:ubuntu"
           command = [
             "newman", "run",

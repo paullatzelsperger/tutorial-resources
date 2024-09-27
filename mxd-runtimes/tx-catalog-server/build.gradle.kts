@@ -36,6 +36,7 @@ dependencies {
     runtimeOnly(catalogLibs.dcp) // DCP protocol impl
     runtimeOnly(catalogLibs.core.dcp) // DCP protocol impl
     runtimeOnly(catalogLibs.api.dsp.config) // json-ld expansion
+    runtimeOnly(catalogLibs.core.jsonld) // locally cached context files
 
     runtimeOnly(libs.edc.vault.hashicorp)
     runtimeOnly(catalogLibs.bundles.sql)
