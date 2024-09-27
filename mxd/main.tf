@@ -94,7 +94,7 @@ module "alice-identityhub" {
 module "alice-catalog-server" {
   source            = "./modules/catalog-server"
   humanReadableName = "alice-catalogserver"
-  serviceName = "alice-cs"
+  serviceName       = "alice-cs"
   namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-bpn
   vault-url         = "http://alice-vault:8200"

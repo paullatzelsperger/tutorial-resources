@@ -139,6 +139,7 @@ resource "kubernetes_config_map" "catalog-server-config" {
     EDC_DATASOURCE_DEFAULT_USER     = var.database.user
     EDC_DATASOURCE_DEFAULT_PASSWORD = var.database.password
     EDC_SQL_SCHEMA_AUTOCREATE       = true
+    EDC_COMPONENT_ID                = var.serviceName
 
     # remote STS configuration
     EDC_IAM_STS_OAUTH_TOKEN_URL           = var.dcp-config.sts_token_url

@@ -6,9 +6,9 @@
     "supportedProtocols": "dataspace-protocol-http"
   },
   {
-    "name": "alice",
+    "name": "alice-cs",
     "id": "BPNL000000000001",
-    "url": "http://alice-controlplane:8084/api/v1/dsp",
+    "url": "http://alice-cs:8082/api/dsp",
     "supportedProtocols": "dataspace-protocol-http"
   }
 ]

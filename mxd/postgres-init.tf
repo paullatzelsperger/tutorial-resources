@@ -48,10 +48,10 @@ resource "kubernetes_config_map" "postgres-initdb-config" {
 }
 
 locals {
-  bdrs-postgres  = module.postgres["bdrs"]
-  alice-postgres = module.postgres["alice"]
-  bob-postgres   = module.postgres["bob"]
-  catalogserver-postgres   = module.postgres["alice-catalogserver"]
+  bdrs-postgres          = module.postgres["bdrs"]
+  alice-postgres         = module.postgres["alice"]
+  bob-postgres           = module.postgres["bob"]
+  catalogserver-postgres = module.postgres["alice-catalogserver"]
   # trudy-postgres          =  module.postgres["trudy"]
   backendservice-postgres = module.postgres["backendservice"]
 

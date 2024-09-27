@@ -108,5 +108,5 @@ variable "aliases" {
 }
 
 locals {
-  name         = lower(var.serviceName)
+  name = lower(var.serviceName)
 }

@@ -18,14 +18,14 @@
 #
 
 module "minio" {
-  source         = "../minio"
+  source            = "../minio"
   humanReadableName = lower(var.humanReadableName)
-  minio-username = var.minio-config.minio-username
-  minio-password = var.minio-config.minio-password
+  minio-username    = var.minio-config.minio-username
+  minio-password    = var.minio-config.minio-password
 }
 
 resource "helm_release" "connector" {
-  name = lower(var.humanReadableName)
+  name              = lower(var.humanReadableName)
   namespace         = var.namespace
   force_update      = true
   dependency_update = true
@@ -82,7 +82,7 @@ resource "helm_release" "connector" {
           }
         ]
       }
-    }
+      }
     ),
     yamlencode({
       iatp : {
@@ -108,7 +108,7 @@ resource "helm_release" "connector" {
           "EDC_IAM_DID_WEB_USE_HTTPS" : "false"
           "EDC_IAM_TRUSTED-ISSUER_DATASPACE-ISSUER_ID" : "did:web:dataspace-issuer"
           "EDC_IAM_TRUSTED-ISSUER_DATASPACE-ISSUER_SUPPORTEDTYPES" : "[\"*\"]"
-          "EDC_COMPONENT_ID": var.humanReadableName
+          "EDC_COMPONENT_ID" : var.humanReadableName
         }
         bdrs : {
           server : {
@@ -184,6 +184,6 @@ resource "kubernetes_config_map" "participants-map" {
 locals {
   jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
-  azure-sas-token = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
+  azure-sas-token                 = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
   minio-url                       = module.minio.minio-url
 }
