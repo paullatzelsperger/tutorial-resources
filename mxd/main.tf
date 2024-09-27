@@ -93,15 +93,16 @@ module "alice-identityhub" {
 # alice's catalog server
 module "alice-catalog-server" {
   source            = "./modules/catalog-server"
-  humanReadableName = "alice-cs"
+  humanReadableName = "alice-catalogserver"
+  serviceName = "alice-cs"
   namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-bpn
   vault-url         = "http://alice-vault:8200"
   bdrs-url          = "http://bdrs-server:8082/api/directory"
   database = {
-    user     = local.databases.catalogserver.database-username
-    password = local.databases.catalogserver.database-password
-    url      = "jdbc:postgresql://${local.catalogserver-postgres.database-host}/${local.databases.catalogserver.database-name}"
+    user     = local.databases.alice-catalogserver.database-username
+    password = local.databases.alice-catalogserver.database-password
+    url      = "jdbc:postgresql://${local.catalogserver-postgres.database-host}/${local.databases.alice-catalogserver.database-name}"
   }
   dcp-config = {
     id                     = var.alice-did

@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "catalog-server" {
     name      = lower(var.humanReadableName)
     namespace = var.namespace
     labels = {
-      App = lower(var.humanReadableName)
+      App = lower(var.serviceName)
     }
   }
 
@@ -30,14 +30,14 @@ resource "kubernetes_deployment" "catalog-server" {
     replicas = 1
     selector {
       match_labels = {
-        App = lower(var.humanReadableName)
+        App = lower(var.serviceName)
       }
     }
 
     template {
       metadata {
         labels = {
-          App = lower(var.humanReadableName)
+          App = lower(var.serviceName)
         }
       }
 
@@ -111,7 +111,7 @@ resource "kubernetes_deployment" "catalog-server" {
 
 resource "kubernetes_config_map" "catalog-server-config" {
   metadata {
-    name      = "${lower(var.humanReadableName)}-config"
+    name      = "${lower(var.serviceName)}-config"
     namespace = var.namespace
   }
 
@@ -125,7 +125,7 @@ resource "kubernetes_config_map" "catalog-server-config" {
     WEB_HTTP_PROTOCOL_PATH          = "/api/dsp"
     WEB_HTTP_MANAGEMENT_PORT        = var.ports.management
     WEB_HTTP_MANAGEMENT_PATH        = "/api/management"
-    EDC_DSP_CALLBACK_ADDRESS        = "http://${local.service-name}:${var.ports.protocol}/api/dsp"
+    EDC_DSP_CALLBACK_ADDRESS        = "http://${var.serviceName}:${var.ports.protocol}/api/dsp"
     EDC_IAM_STS_PRIVATEKEY_ALIAS    = "${var.participantId}#${var.aliases.sts-private-key}"
     EDC_IAM_STS_PUBLICKEY_ID        = "${var.participantId}#${var.aliases.sts-public-key-id}"
     JAVA_TOOL_OPTIONS               = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${var.ports.debug}"

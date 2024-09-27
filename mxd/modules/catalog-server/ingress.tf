@@ -19,7 +19,7 @@
 
 resource "kubernetes_ingress_v1" "api-ingress" {
   metadata {
-    name      = "${var.humanReadableName}-ingress"
+    name      = "${var.serviceName}-ingress"
     namespace = var.namespace
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/$2"
@@ -32,7 +32,7 @@ resource "kubernetes_ingress_v1" "api-ingress" {
       host = "localhost"
       http {
         path {
-          path = "/${var.humanReadableName}(/|$)(.*)"
+          path = "/${var.serviceName}(/|$)(.*)"
           backend {
             service {
               name = kubernetes_service.catalog-server-service.metadata.0.name

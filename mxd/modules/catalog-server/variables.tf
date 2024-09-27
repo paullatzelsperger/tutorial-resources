@@ -20,10 +20,14 @@
 ## Normally, you shouldn't need to change any values here. If you do, please be sure to also change them in the seed script (seed-k8s.sh).
 ## Neglecting to do that will render the connectors and identity hubs inoperable!
 
-
 variable "humanReadableName" {
   type        = string
-  description = "Human readable name of the connector, NOT the ID!!. Required."
+  description = "Human-readable name of the catalog server, e.g. pod names, deployment names, etc."
+}
+
+variable "serviceName" {
+  type        = string
+  description = "Kubernetes name of the catalog server, as it appears in K8S services, URL paths, etc. NOT the ID!!. Required."
 }
 
 variable "participantId" {
@@ -104,6 +108,5 @@ variable "aliases" {
 }
 
 locals {
-  name         = lower(var.humanReadableName)
-  service-name = "${var.humanReadableName}-service"
+  name         = lower(var.serviceName)
 }

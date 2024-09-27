@@ -19,7 +19,7 @@
 
 resource "kubernetes_service" "catalog-server-service" {
   metadata {
-    name      = local.service-name
+    name      = var.serviceName
     namespace = var.namespace
   }
   spec {
