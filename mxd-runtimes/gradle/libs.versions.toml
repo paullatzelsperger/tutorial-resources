@@ -32,7 +32,8 @@ edc-ext-jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
 edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
 edc-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
 edc-http-lib = { module = "org.eclipse.edc:http-lib", version.ref = "edc" }
-edc-spi-did = {module= "org.eclipse.edc:did-spi", version.ref="edc"}
+edc-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }
+edc-spi-crawler = { module = "org.eclipse.edc:crawler-spi", version.ref = "edc" }
 
 # identith-hub SPI modules
 edc-ih-spi-did = { module = "org.eclipse.edc:did-spi", version.ref = "edc" }
@@ -72,7 +73,8 @@ edc-sts = { module = "org.eclipse.edc:identity-trust-sts-embedded", version.ref 
 edc-sts-api = { module = "org.eclipse.edc:identity-trust-sts-api", version.ref = "edc" }
 edc-sts-accountprovisioner = { module = "org.eclipse.edc:sts-account-provisioner", version.ref = "edc" }
 
-
+# Tractus-X Runtime BOMs
+edc-tx-controlplane = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }
 
 # third-party libraries
 postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }

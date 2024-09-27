@@ -41,8 +41,10 @@ controlplane:
     management:
       authKey: password
   image:
-    pullPolicy: Never
-#    repository: "edc-controlplane-postgresql-hashicorp-vault"
+    # override with customized image. Do not forget to update the var.image-pull-policy value if this is removed!
+    repository: "tx-control-plane"
+    tag: "latest"
+
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
     readOnlyRootFilesystem: false

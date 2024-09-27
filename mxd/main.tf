@@ -47,6 +47,7 @@ module "alice-connector" {
   depends_on        = [module.azurite]
   source            = "./modules/connector"
   humanReadableName = "alice"
+  image-pull-policy = "Never"
   participantId     = var.alice-bpn
   database-host     = local.alice-postgres.database-host
   database-name     = local.databases.alice.database-name
@@ -118,6 +119,7 @@ module "bob-connector" {
   source            = "./modules/connector"
   humanReadableName = "bob"
   namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
+  image-pull-policy = "Never"
   participantId     = var.bob-bpn
   database-host     = local.bob-postgres.database-host
   database-name     = local.databases.bob.database-name

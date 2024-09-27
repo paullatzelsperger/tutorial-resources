@@ -43,6 +43,7 @@ dependencyResolutionManagement {
 }
 
 include(":tx-identityhub")
+include(":tx-control-plane")
 include(":tx-catalog-server")
 include(":backend-service")
 include(":jwt-signer")

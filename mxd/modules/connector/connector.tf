@@ -59,24 +59,28 @@ resource "helm_release" "connector" {
     }),
     yamlencode({
       controlplane : {
-        volumeMounts : [{
-          name : "participants"
-          mountPath : "/app/participants.json"
-          subPath : "participants.json"
-        }]
-
-        volumes : [{
-          name : "participants"
-          configMap : {
-            name : kubernetes_config_map.participants-map.metadata[0].name
-            items : [
-              {
-                key : "participants.json"
-                path : "participants.json"
-              }
-            ]
+        volumeMounts : [
+          {
+            name : "participants"
+            mountPath : "/app/participants.json"
+            subPath : "participants.json"
           }
-        }]
+        ]
+
+        volumes : [
+          {
+            name : "participants"
+            configMap : {
+              name : kubernetes_config_map.participants-map.metadata[0].name
+              items : [
+                {
+                  key : "participants.json"
+                  path : "participants.json"
+                }
+              ]
+            }
+          }
+        ]
       }
     }
     ),
@@ -104,6 +108,7 @@ resource "helm_release" "connector" {
           "EDC_IAM_DID_WEB_USE_HTTPS" : "false"
           "EDC_IAM_TRUSTED-ISSUER_DATASPACE-ISSUER_ID" : "did:web:dataspace-issuer"
           "EDC_IAM_TRUSTED-ISSUER_DATASPACE-ISSUER_SUPPORTEDTYPES" : "[\"*\"]"
+          "EDC_COMPONENT_ID": var.humanReadableName
         }
         bdrs : {
           server : {
@@ -113,10 +118,10 @@ resource "helm_release" "connector" {
         catalog : {
           enabled : true
           crawler : {
-          #   num : 1
+            #   num : 1
             period : 10
             initialDelay : 10
-            targetsFile: "/app/participants.json"
+            targetsFile : "/app/participants.json"
           }
         }
       }
