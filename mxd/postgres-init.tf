@@ -51,6 +51,7 @@ locals {
   bdrs-postgres  = module.postgres["bdrs"]
   alice-postgres = module.postgres["alice"]
   bob-postgres   = module.postgres["bob"]
+  catalogserver-postgres   = module.postgres["catalogserver"]
   # trudy-postgres          =  module.postgres["trudy"]
   backendservice-postgres = module.postgres["backendservice"]
 
@@ -72,6 +73,12 @@ locals {
       database-name     = "bob",
       database-username = "bob"
       database-password = "bob"
+    }
+
+    catalogserver = {
+      database-name     = "catalogserver",
+      database-username = "catalogserver"
+      database-password = "catalogserver"
     }
 
     # trudy = {

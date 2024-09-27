@@ -99,9 +99,9 @@ module "alice-catalog-server" {
   vault-url         = "http://alice-vault:8200"
   bdrs-url          = "http://bdrs-server:8082/api/directory"
   database = {
-    user     = local.databases.alice.database-username
-    password = local.databases.alice.database-password
-    url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
+    user     = local.databases.catalogserver.database-username
+    password = local.databases.catalogserver.database-password
+    url      = "jdbc:postgresql://${local.catalogserver-postgres.database-host}/${local.databases.catalogserver.database-name}"
   }
   dcp-config = {
     id                     = var.alice-did

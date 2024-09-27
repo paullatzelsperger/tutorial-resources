@@ -38,7 +38,7 @@ dependencies {
     runtimeOnly(catalogLibs.api.dsp.config) // json-ld expansion
 
     runtimeOnly(libs.edc.vault.hashicorp)
-//    runtimeOnly(libs.bundles.sql.edc)
+    runtimeOnly(catalogLibs.bundles.sql)
     runtimeOnly(catalogLibs.sts.remote.client)
     runtimeOnly(catalogLibs.bdrs.client) // audience mapper
     runtimeOnly(catalogLibs.tx.dcp) // the default scope mapper
