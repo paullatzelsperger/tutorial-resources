@@ -41,9 +41,9 @@ controlplane:
     management:
       authKey: password
   image:
-    # override with customized image. Do not forget to update the var.image-pull-policy value if this is removed!
     repository: "tx-control-plane"
     tag: "latest"
+    pullPolicy: Never
 
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
@@ -61,7 +61,7 @@ dataplane:
     initialDelaySeconds: 5
     periodSeconds: 5
   image:
-    pullPolicy: Never
+    pullPolicy: Always
 #    repository: "edc-dataplane-hashicorp-vault"
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O

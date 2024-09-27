@@ -23,12 +23,6 @@ variable "namespace" {
   default     = "mxd"
 }
 
-variable "image-pull-policy" {
-  default     = "Always"
-  type        = string
-  description = "Kubernetes ImagePullPolicy for all images"
-}
-
 variable "humanReadableName" {
   type        = string
   description = "Human readable name of the connector, NOT the BPN!!. Required."

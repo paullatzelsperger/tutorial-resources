@@ -149,16 +149,6 @@ resource "helm_release" "connector" {
   }
 
   set {
-    name  = "controlplane.image.pullPolicy"
-    value = var.image-pull-policy
-  }
-
-  set {
-    name  = "dataplane.image.pullPolicy"
-    value = var.image-pull-policy
-  }
-
-  set {
     name  = "postgresql.jdbcUrl"
     value = local.jdbcUrl
   }

@@ -75,6 +75,19 @@ resource "kubernetes_ingress_v1" "mxd-ingress" {
             }
           }
         }
+
+        path {
+          path = "/${var.humanReadableName}/fc(/|$)(.*)"
+          backend {
+            service {
+              name = kubernetes_service.controlplane-service.metadata.0.name
+              port {
+                number = 8085
+              }
+            }
+          }
+        }
+
         path {
           path = "/backend-service(/|$)(.*)"
           backend {
