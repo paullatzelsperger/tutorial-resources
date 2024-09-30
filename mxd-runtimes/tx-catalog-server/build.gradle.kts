@@ -22,6 +22,8 @@ configurations.all {
     resolutionStrategy {
         // Tractus-X depends on an earlier version of this, which does not yet contain ConsoleMonitor$Level#defaultLevel()
         force("org.eclipse.edc:boot-spi:0.10.0-SNAPSHOT")
+        // force the latest version, because the DspHttpCoreExtension now registers the dispatcher WITH the protocol string
+        force("org.eclipse.edc:core-spi:0.10.0-SNAPSHOT")
     }
 }
 
@@ -36,15 +38,26 @@ dependencies {
     runtimeOnly(catalogLibs.dcp) // DCP protocol impl
     runtimeOnly(catalogLibs.core.dcp) // DCP protocol impl
     runtimeOnly(catalogLibs.api.dsp.config) // json-ld expansion
-    runtimeOnly(catalogLibs.core.jsonld) // locally cached context files
+    runtimeOnly(catalogLibs.tx.core.jsonld) // locally cached context files
 
     runtimeOnly(libs.edc.vault.hashicorp)
     runtimeOnly(catalogLibs.bundles.sql)
     runtimeOnly(catalogLibs.sts.remote.client)
-    runtimeOnly(catalogLibs.bdrs.client) // audience mapper
-    runtimeOnly(catalogLibs.tx.dcp) // the default scope mapper
     runtimeOnly(catalogLibs.config.trustedissuers) // to configure the trusted issuers via config
+
+    // libs from tx
+    runtimeOnly(catalogLibs.tx.bdrs.client) // audience mapper
+    runtimeOnly(catalogLibs.tx.dcp) // the default scope mapper
     runtimeOnly(catalogLibs.tx.fc) // file-based node directory
+
+    constraints {
+        implementation("org.eclipse.edc:boot-spi:0.10.0-SNAPSHOT") {
+            because("Console Monitor needs the default log level")
+        }
+        implementation("org.eclipse.edc:dsp:0.10.0-SNAPSHOT") {
+            because("DSP Remote Message Dispatcher Registry now requires a String argument")
+        }
+    }
 
     runtimeOnly(libs.edc.did.core) // DidResolverRegistry, DidPublicKeyResolver
     runtimeOnly(libs.edc.did.web) // for registering the WebDidResolver

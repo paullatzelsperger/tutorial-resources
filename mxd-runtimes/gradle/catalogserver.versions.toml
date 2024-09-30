@@ -37,10 +37,10 @@ edc-sql-pool = { module = "org.eclipse.edc:sql-pool-apache-commons", version.ref
 edc-sql-transactionlocal = { module = "org.eclipse.edc:transaction-local", version.ref = "edc" }
 
 # tx modules
-bdrs-client = { module = "org.eclipse.tractusx.edc:bdrs-client", version.ref = "tractusx" }
+tx-bdrs-client = { module = "org.eclipse.tractusx.edc:bdrs-client", version.ref = "tractusx" }
 tx-dcp = { module = "org.eclipse.tractusx.edc:tx-dcp", version.ref = "tractusx" }
 tx-fc = { module = "org.eclipse.tractusx.edc:federated-catalog", version.ref = "tractusx" }
-core-jsonld = { module = "org.eclipse.tractusx.edc:json-ld-core", version.ref = "tractusx" }
+tx-core-jsonld = { module = "org.eclipse.tractusx.edc:json-ld-core", version.ref = "tractusx" }
 # third party modules
 postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
 
