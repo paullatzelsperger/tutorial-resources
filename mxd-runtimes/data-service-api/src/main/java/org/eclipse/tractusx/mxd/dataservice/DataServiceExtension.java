@@ -24,29 +24,21 @@ import org.eclipse.edc.web.spi.WebService;
 import org.eclipse.edc.web.spi.configuration.WebServiceConfigurer;
 import org.eclipse.edc.web.spi.configuration.WebServiceSettings;
 import org.eclipse.tractusx.mxd.dataservice.api.DataServiceApiController;
+import org.eclipse.tractusx.mxd.dataservice.model.DataRecord;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.IntStream;
 
 @Extension(DataServiceExtension.NAME)
 public class DataServiceExtension implements ServiceExtension {
 
     public static final String NAME = "MXD Demo Backend Services";
-    private final static int DEFAULT_PORT = 8080;
     public static final String DEFAULT_PATH = "/";
     public static final String DATA_API_CONTEXT_NAME = "data";
+    private final static int DEFAULT_PORT = 8080;
     @SettingContext("Version API context setting key")
     private static final String DATA_API_CONFIG_KEY = "web.http.data";
-
-
-    @Inject
-    private WebService webService;
-    @Inject
-    private WebServiceConfigurer configurer;
-    @Inject
-    private WebServer webServer;
-
-
     public static final WebServiceSettings SETTINGS = WebServiceSettings.Builder.newInstance()
             .apiConfigKey(DATA_API_CONFIG_KEY)
             .contextAlias(DATA_API_CONTEXT_NAME)
@@ -55,6 +47,12 @@ public class DataServiceExtension implements ServiceExtension {
             .useDefaultContext(false)
             .name("Data Service API")
             .build();
+    @Inject
+    private WebService webService;
+    @Inject
+    private WebServiceConfigurer configurer;
+    @Inject
+    private WebServer webServer;
 
     @Override
     public String name() {
@@ -65,7 +63,15 @@ public class DataServiceExtension implements ServiceExtension {
     public void initialize(ServiceExtensionContext context) {
         var config = context.getConfig(DATA_API_CONFIG_KEY);
         configurer.configure(config, webServer, SETTINGS);
-        webService.registerResource(DATA_API_CONTEXT_NAME, new DataServiceApiController(new ConcurrentHashMap<>()));
+        var database = new ConcurrentHashMap<String, DataRecord>();
+        populate(database);
+        webService.registerResource(DATA_API_CONTEXT_NAME, new DataServiceApiController(database));
+    }
+
+    private void populate(Map<String, DataRecord> database) {
+        IntStream.range(0, 10)
+                .mapToObj(i -> new DataRecord("id" + i, "Record Nr. " + i, "This record nr. " + i))
+                .forEach(dr -> database.put(dr.id(), dr));
     }
 
 }

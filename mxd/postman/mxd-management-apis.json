@@ -146,7 +146,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\"\n    }\n}",
+					"raw": "{\n    \"@context\": {},\n    \"@id\": \"{{ASSET_ID}}\", \n    \"properties\": {\n        \"description\": \"Product EDC Demo Asset\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"http://data-service-api:8080/v1/data\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"

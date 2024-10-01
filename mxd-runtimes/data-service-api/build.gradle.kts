@@ -33,8 +33,9 @@ dependencies {
 
     implementation(libs.edc.http)
     implementation(libs.edc.http.lib)
-    runtimeOnly(libs.edc.core.connector)
     implementation(libs.edc.boot)
+
+    runtimeOnly(libs.edc.core.connector)
     runtimeOnly(libs.edc.api.observability)
     runtimeOnly(libs.edc.sql.transactionlocal)
 

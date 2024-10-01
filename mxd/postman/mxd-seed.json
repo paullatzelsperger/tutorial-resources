@@ -40,7 +40,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"MXD Asset 1: this Asset is available to holders of the DataExchangeGovernance credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"MXD Asset 1: this Asset is available to holders of the DataExchangeGovernance credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,7 +91,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-2\",\n    \"description\": \"MXD Asset 2: this Asset is available to holders of the DataExchangeGovernance credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-2\",\n    \"description\": \"MXD Asset 2: this Asset is available to holders of the DataExchangeGovernance credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -142,7 +142,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-3\",\n    \"description\": \"MXD Asset 3: this Demo Asset is only available to holders of the Dismantler credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-3\",\n    \"description\": \"MXD Asset 3: this Demo Asset is only available to holders of the Dismantler credential\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -524,7 +524,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"Normal Asset on the Catalog Server\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
+							"raw": "{\n  \"@context\": {},\n  \"properties\": {\n    \"id\": \"asset-1\",\n    \"description\": \"Normal Asset on the Catalog Server\"\n  },\n  \"dataAddress\": {\n    \"@type\": \"DataAddress\",\n    \"type\": \"HttpData\",\n    \"baseUrl\": \"http://data-service-api:8080/v1/data\",\n    \"proxyPath\": \"true\",\n    \"proxyQueryParams\": \"true\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
