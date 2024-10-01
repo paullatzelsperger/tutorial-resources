@@ -18,7 +18,7 @@
 #
 
 ---
-name: "Run MXD locally"
+name: "Run E2E Tests"
 on:
   workflow_dispatch:
   workflow_run:
@@ -58,19 +58,14 @@ jobs:
         with:
           java-version: '22'
           distribution: 'temurin'
-      - name: "Backend-Service Build"
-        working-directory: mxd/backend-service
-        run: |-
-          ./gradlew clean dockerize
-      - name: "Custom TractusX EDC Build"
-        working-directory: custom-tractusx-edc
+      - name: "Build Runtime Docker Images"
+        working-directory: mxd-runtimes
         run: |-
           ./gradlew clean dockerize
       - name: "Load Docker Images"
         run: |-
-          kind load docker-image -n mxd backend-service:1.0.0
-          kind load docker-image -n mxd custom-edc-controlplane-postgresql-hashicorp-vault:latest
-          kind load docker-image -n mxd custom-edc-dataplane-hashicorp-vault:latest
+          kind load docker-image --name mxd backend-service tx-identityhub tx-catalog-server tx-control-plane
+
       - name: "Terraform init"
         working-directory: mxd
         run: |-
@@ -90,8 +85,10 @@ jobs:
           curl --fail http://localhost/bob/health/api/check/readiness
           curl --fail http://localhost/alice/health/api/check/readiness
 
-      - name: "Run Tests"
-        uses: ./.github/actions/mxd-test-action
+      - name: "Run E2E Tests"
+        working-directory: mxd-runtimes
+        run: |-
+          ./gradlew :e2e-test:test -DrunAllTests=true -PverboseTest=true
 
       - name: "Destroy the KinD cluster"
         run: >-
