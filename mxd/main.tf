@@ -61,8 +61,8 @@ module "alice-connector" {
     sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
   dataplane = {
-    privatekey-alias = "alice-dp-signer-key-alias"
-    publickey-alias  = "alice-dp-verifier-key-alias"
+    privatekey-alias = "${var.alice-did}#signing-key-1"
+    publickey-alias  = "${var.alice-did}#signing-key-1"
   }
 
   azure-account-name    = var.alice-azure-account-name
@@ -133,8 +133,8 @@ module "bob-connector" {
     sts_clientsecret_alias = "participant-bob-sts-client-secret"
   }
   dataplane = {
-    privatekey-alias = "bob-dp-signer-key-alias"
-    publickey-alias  = "bob-dp-verifier-key-alias"
+    privatekey-alias = "${var.bob-did}#signing-key-1"
+    publickey-alias  = "${var.bob-did}#signing-key-1"
   }
 
   azure-account-name    = var.bob-azure-account-name

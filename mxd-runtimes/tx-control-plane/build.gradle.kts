@@ -22,6 +22,8 @@ dependencies {
 
     runtimeOnly(libs.edc.tx.controlplane)
     implementation(libs.edc.spi.crawler)
+    implementation(catalogLibs.tx.dcp)
+    implementation(libs.edc.spi.identitytrust)
 
     testImplementation(libs.edc.junit)
 }

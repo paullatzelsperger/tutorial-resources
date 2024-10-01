@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "36c0d526-ba6d-4f3b-929f-abe8860ad0b1",
+		"_postman_id": "079819cb-65da-40ac-9808-c19411a81c49",
 		"name": "MXD Management API Seed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "647585"
@@ -346,7 +346,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-deg\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"in\",\n        \"operandRight\": [\"asset-1\", \"asset-2\"]\n    }\n}",
+							"raw": "{\n    \"@context\": {},\n    \"@id\": \"1\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-membership\",\n    \"assetsSelector\" : {\n        \"@type\" : \"CriterionDto\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"in\",\n        \"operandRight\": [\"asset-1\", \"asset-2\"]\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -913,7 +913,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"active\": \"true\",\n    \"did\": \"{{PARTICIPANT_DID}}\",\n    \"key\": {\n        \"keyGeneratorParams\": {\n            \"algorithm\": \"EdDSA\",\n            \"curve\": \"Ed25519\"\n        },\n        \"keyId\": \"{{PARTICIPANT_DID}}#signing-key-1\",\n        \"privateKeyAlias\": \"signing-key-1\"\n    },\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"serviceEndpoints\": [\n        {\n            \"type\": \"CredentialService\",\n            \"serviceEndpoint\": \"{{IDENTITYHUB_URL}}/v1/participants/{{PARTICIPANT_CONTEXT_ID_BASE64}}\",\n            \"id\": \"credentialservice-1\"\n        },\n        {\n            \"type\": \"ProtocolEndpoint\",\n            \"serviceEndpoint\": \"http://{{CONTROL_PLANE_HOST}}:8084/api/dsp\",\n            \"id\": \"dsp-url\"\n        }\n    ]\n}",
+							"raw": "{\n    \"active\": \"true\",\n    \"did\": \"{{PARTICIPANT_DID}}\",\n    \"key\": {\n        \"keyGeneratorParams\": {\n            \"algorithm\": \"EdDSA\",\n            \"curve\": \"Ed25519\"\n        },\n        \"keyId\": \"{{PARTICIPANT_DID}}#signing-key-1\",\n        \"privateKeyAlias\": \"{{PARTICIPANT_DID}}#signing-key-1\"\n    },\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"serviceEndpoints\": [\n        {\n            \"type\": \"CredentialService\",\n            \"serviceEndpoint\": \"{{IDENTITYHUB_URL}}/v1/participants/{{PARTICIPANT_CONTEXT_ID_BASE64}}\",\n            \"id\": \"credentialservice-1\"\n        },\n        {\n            \"type\": \"ProtocolEndpoint\",\n            \"serviceEndpoint\": \"http://{{CONTROL_PLANE_HOST}}:8084/api/dsp\",\n            \"id\": \"dsp-url\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1005,8 +1005,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1015,7 +1018,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"membership-credential\",\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/catenax/credentials/v1.0.0\"\n            ],\n            \"id\": \"1f36af58-0fc0-4b24-9b1c-e37d59668089\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"{{TYPE}}Credential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2021-06-16T18:56:59Z\",\n            \"expirationDate\": \"2032-06-16T18:56:59Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"holderIdentifier\": \"{{BPN}}\",\n                \"contractTemplate\": \"https://public.catena-x.org/contracts/{{TYPE}}.v1.pdf\",\n                \"contractVersion\": \"1.0.0\"\n            }\n        },\n        \"rawVc\": \"{{FRAMEWORK_CREDENTIAL}}\"\n    }\n}",
+							"raw": "{\n    \"id\": \"deg-credential\",\n    \"participantId\": \"{{PARTICIPANT_CONTEXT_ID}}\",\n    \"issuancePolicy\": null,\n    \"reissuancePolicy\": null,\n    \"verifiableCredentialContainer\": {\n        \"format\": \"JWT\",\n        \"credential\": {\n            \"@context\": [\n                \"https://www.w3.org/2018/credentials/v1\",\n                \"https://w3id.org/catenax/credentials/v1.0.0\"\n            ],\n            \"id\": \"1f36af58-0fc0-4b24-9b1c-e37d59668089\",\n            \"type\": [\n                \"VerifiableCredential\",\n                \"DataExchangeGovernanceCredential\"\n            ],\n            \"issuer\": \"did:web:dataspace-issuer\",\n            \"issuanceDate\": \"2021-06-16T18:56:59Z\",\n            \"expirationDate\": \"2032-06-16T18:56:59Z\",\n            \"credentialSubject\": {\n                \"id\": \"{{PARTICIPANT_DID}}\",\n                \"holderIdentifier\": \"{{BPN}}\",\n                \"contractTemplate\": \"https://public.catena-x.org/contracts/DataExchangeGovernance.v1.pdf\",\n                \"contractVersion\": \"1.0.0\"\n            }\n        },\n        \"rawVc\": \"{{FRAMEWORK_CREDENTIAL}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"

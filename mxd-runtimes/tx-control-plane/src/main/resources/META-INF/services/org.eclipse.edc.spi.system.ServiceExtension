@@ -13,3 +13,4 @@
 #
 
 org.eclipse.tractusx.edc.mxd.federatedcatalog.MxdNodeFilterExtension
+org.eclipse.tractusx.edc.mxd.IdentityExtractorPatchExtension

@@ -23,6 +23,7 @@ jsonld = { module = "org.eclipse.edc:json-ld", version.ref = "edc" }
 oauth2-client = { module = "org.eclipse.edc:oauth2-client", version.ref = "edc" }
 sts-remote-client = { module = "org.eclipse.edc:identity-trust-sts-remote-client", version.ref = "edc" }
 config-trustedissuers = { module = "org.eclipse.edc:identity-trust-issuers-configuration", version.ref = "edc" }
+fc-core = {module="org.eclipse.edc:federated-catalog-core", version.ref="edc"}
 
 # SQL modules
 edc-sql-assetindex = { module = "org.eclipse.edc:asset-index-sql", version.ref = "edc" }
