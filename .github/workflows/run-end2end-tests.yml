@@ -45,6 +45,7 @@ jobs:
         with:
           config: mxd/kind.config.yaml
           cluster_name: mxd
+
       - name: "Install nginx ingress controller"
         run: |-
           echo "::notice title=nginx ingress on KinD::For details how to run nginx ingress on KinD check https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx"
@@ -58,6 +59,7 @@ jobs:
         with:
           java-version: '22'
           distribution: 'temurin'
+
       - name: "Build Runtime Docker Images"
         working-directory: mxd-runtimes
         run: |-

@@ -11,7 +11,7 @@
 #        SAP SE - initial API and implementation
 
 ---
-name: "Run Tests"
+name: "Run Backend Tests"
 
 on:
   push:
@@ -22,7 +22,7 @@ on:
     branches:
       - main
     paths:
-      - 'mxd/backend-service/**'
+      - 'mxd-runtimes/backend-service/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -42,6 +42,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-          
-      - run: ./gradlew test
-        working-directory: mxd/backend-service
+
+      - name: Run Backend-Service tets
+        working-directory: mxd-runtimes
+        run: ./gradlew :backend-service:test
