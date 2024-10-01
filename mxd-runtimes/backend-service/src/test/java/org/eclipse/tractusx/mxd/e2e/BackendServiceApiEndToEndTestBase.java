@@ -42,7 +42,7 @@ public abstract class BackendServiceApiEndToEndTestBase {
     }
 
     public URI getBaseUri() {
-        return URI.create("http:/localhost:8080/api");
+        return URI.create("http://localhost:8080/api");
     }
 
 }
