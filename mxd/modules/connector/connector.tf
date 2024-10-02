@@ -17,12 +17,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 #
 
-module "minio" {
-  source            = "../minio"
-  humanReadableName = lower(var.humanReadableName)
-  minio-username    = var.minio-config.minio-username
-  minio-password    = var.minio-config.minio-password
-}
+
 
 resource "helm_release" "connector" {
   name              = lower(var.humanReadableName)
@@ -48,8 +43,8 @@ resource "helm_release" "connector" {
             "-c",
             join(" && ", [
               "sleep 5",
-              "/bin/vault kv put secret/edc.aws.access.key content=${var.minio-config.minio-username}",
-              "/bin/vault kv put secret/edc.aws.secret.access.key content=${var.minio-config.minio-password}",
+              "/bin/vault kv put secret/edc.aws.access.key content=${var.minio-config.username}",
+              "/bin/vault kv put secret/edc.aws.secret.access.key content=${var.minio-config.password}",
               "/bin/vault kv put secret/${var.azure-account-name}-key content=${var.azure-account-key}",
               "/bin/vault kv put secret/${var.azure-account-name}-sas content='${local.azure-sas-token}'",
             ])
@@ -185,5 +180,5 @@ locals {
   jdbcUrl                         = "jdbc:postgresql://${var.database-host}:${var.database-port}/${var.database-name}"
   edc-blobstore-endpoint-template = "${var.azure-url}/%s"
   azure-sas-token                 = jsonencode({ edctype = "dataspaceconnector:azuretoken", sas = var.azure-account-key-sas })
-  minio-url                       = module.minio.minio-url
+  minio-url                       = var.minio-config.url
 }

@@ -54,7 +54,6 @@ locals {
   catalogserver-postgres = module.postgres["alice-catalogserver"]
 
   databases = {
-
     bdrs = {
       database-name     = "bdrs",
       database-username = "bdrs"
@@ -74,7 +73,7 @@ locals {
     }
 
     alice-catalogserver = {
-      database-name     = "catalogserver",
+      database-name     = "catalogserver"
       database-username = "catalogserver"
       database-password = "catalogserver"
     }

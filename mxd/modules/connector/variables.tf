@@ -97,10 +97,11 @@ variable "azure-url" {
 }
 
 variable "minio-config" {
-  default = {
-    minio-username = ""
-    minio-password = ""
-  }
+  type = object({
+    username = string
+    password = string
+    url      = string
+  })
 }
 
 variable "ingress-host" {
