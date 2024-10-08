@@ -87,6 +87,7 @@ edc-sts-core = { module = "org.eclipse.edc:identity-trust-sts-core", version.ref
 edc-sts = { module = "org.eclipse.edc:identity-trust-sts-embedded", version.ref = "edc" }
 edc-sts-api = { module = "org.eclipse.edc:identity-trust-sts-api", version.ref = "edc" }
 edc-sts-accountprovisioner = { module = "org.eclipse.edc:sts-account-provisioner", version.ref = "edc" }
+edc-sts-accountservice-local = { module = "org.eclipse.edc:sts-account-service-local", version.ref = "edc" }
 
 # Tractus-X Runtime BOMs
 edc-tx-controlplane = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }

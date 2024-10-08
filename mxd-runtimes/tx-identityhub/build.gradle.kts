@@ -38,6 +38,7 @@ dependencies {
     runtimeOnly(libs.edc.sts)
     runtimeOnly(libs.edc.sts.api)
     runtimeOnly(libs.edc.sts.accountprovisioner)
+    runtimeOnly(libs.edc.sts.accountservice.local)
 
     testImplementation(libs.edc.lib.crypto)
     testImplementation(libs.edc.lib.keys)

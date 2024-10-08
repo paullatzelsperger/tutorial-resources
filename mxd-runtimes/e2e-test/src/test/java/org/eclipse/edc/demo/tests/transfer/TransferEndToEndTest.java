@@ -103,24 +103,6 @@ public class TransferEndToEndTest {
     @DisplayName("Tests a successful End-to-End contract negotiation and data transfer")
     @Test
     void transferData_hasPermission_shouldTransferData() {
-//        System.out.println("Waiting for Provider dataplane to come online");
-//        // wait until provider's dataplane is available
-//        await().atMost(TEST_TIMEOUT_DURATION)
-//                .pollDelay(TEST_POLL_DELAY)
-//                .untilAsserted(() -> {
-//                    var jp = baseRequest()
-//                            .get(PROVIDER_MANAGEMENT_URL + "/v3/dataplanes")
-//                            .then()
-//                            .statusCode(200)
-//                            .log().ifValidationFails()
-//                            .extract().body().jsonPath();
-//
-//                    var state = jp.getString("state");
-//                    assertThat(state).isEqualTo("[AVAILABLE]");
-//                });
-//
-        System.out.println("Provider dataplane is online, fetching catalog");
-
         var emptyQueryBody = Json.createObjectBuilder()
                 .add("@context", Json.createObjectBuilder().add("edc", "https://w3id.org/edc/v0.0.1/ns/"))
                 .add("@type", "QuerySpec")
@@ -258,22 +240,6 @@ public class TransferEndToEndTest {
     @DisplayName("Asserts that attempting to negotiate a contract for a non-permitted Assets fails")
     @Test
     void transferData_requestsForbiddenAsset_shouldFail() {
-//        System.out.println("Waiting for Provider dataplane to come online");
-//        // wait until provider's dataplane is available
-//        await().atMost(TEST_TIMEOUT_DURATION)
-//                .pollDelay(TEST_POLL_DELAY)
-//                .untilAsserted(() -> {
-//                    var jp = baseRequest()
-//                            .get(PROVIDER_MANAGEMENT_URL + "/v3/dataplanes")
-//                            .then()
-//                            .statusCode(200)
-//                            .log().ifValidationFails()
-//                            .extract().body().jsonPath();
-//
-//                    var state = jp.getString("state");
-//                    assertThat(state).isEqualTo("[AVAILABLE]");
-//                });
-//
         System.out.println("Provider dataplane is online, fetching catalog");
 
         var emptyQueryBody = Json.createObjectBuilder()
