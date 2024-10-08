@@ -24,6 +24,8 @@ configurations.all {
         force("org.eclipse.edc:boot-spi:0.10.0-SNAPSHOT")
         // force the latest version, because the DspHttpCoreExtension now registers the dispatcher WITH the protocol string
         force("org.eclipse.edc:core-spi:0.10.0-SNAPSHOT")
+        // ContractDefinitionResolver is not present in the older version of EDC used by tractus-Xs
+        force("org.eclipse.edc:catalog-spi:0.10.0-SNAPSHOT")
     }
 }
 
