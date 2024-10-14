@@ -47,12 +47,14 @@ variable "ports" {
     protocol   = number
     debug      = number
     management = number
+    catalog    = number
   })
   default = {
     web        = 8080
     protocol   = 8082
     debug      = 1044
     management = 8081
+    catalog    = 8083
   }
 }
 

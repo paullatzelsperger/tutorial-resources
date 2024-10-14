@@ -36,11 +36,11 @@ import org.eclipse.edc.transform.TypeTransformerRegistryImpl;
 import org.eclipse.edc.transform.spi.TypeTransformerRegistry;
 import org.eclipse.edc.transform.transformer.edc.to.JsonValueToGenericTypeTransformer;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static io.restassured.RestAssured.given;
@@ -73,7 +73,7 @@ public class TransferEndToEndTest {
     private final JsonLd jsonLd = new TitaniumJsonLd(new ConsoleMonitor());
 
     private static RequestSpecification baseRequest() {
-        RestAssured.port= 80;
+        RestAssured.port = 80;
         return given()
                 .header("x-api-key", "password")
                 .contentType("application/json")
@@ -123,18 +123,20 @@ public class TransferEndToEndTest {
 
                     var offerIdsFiltered = jo.stream().map(jv -> {
 
-                        var expanded = jsonLd.expand(jv.asJsonObject()).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
-                        var cat = transformerRegistry.transform(expanded, Catalog.class).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
-                        return cat.getDatasets().stream().filter(ds -> ds instanceof Catalog) // filter for CatalogAssets
-                                .map(ds -> (Catalog) ds)
-                                .filter(sc -> sc.getDataServices().stream().anyMatch(dataService -> dataService.getEndpointUrl().contains("alice"))) // filter for assets from Alice
-                                .flatMap(c -> c.getDatasets().stream())
-                                .filter(dataset -> dataset.getId().equals("asset-1")) // filter for the asset we're allowed to negotiate
-                                .map(Dataset::getOffers)
-                                .map(offers -> offers.keySet().iterator().next())
-                                .findFirst()
-                                .orElse(null);
-                    }).toList();
+                                var expanded = jsonLd.expand(jv.asJsonObject()).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
+                                var cat = transformerRegistry.transform(expanded, Catalog.class).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
+                                return cat.getDatasets().stream().filter(ds -> ds instanceof Catalog) // filter for CatalogAssets
+                                        .map(ds -> (Catalog) ds)
+                                        .filter(sc -> sc.getDataServices().stream().anyMatch(dataService -> dataService.getEndpointUrl().contains("alice"))) // filter for assets from Alice
+                                        .flatMap(c -> c.getDatasets().stream())
+                                        .filter(dataset -> dataset.getId().equals("asset-1")) // filter for the asset we're allowed to negotiate
+                                        .map(Dataset::getOffers)
+                                        .map(offers -> offers.keySet().iterator().next())
+                                        .findFirst()
+                                        .orElse(null);
+                            })
+                            .filter(Objects::nonNull)
+                            .toList();
                     assertThat(offerIdsFiltered).hasSize(1).doesNotContainNull();
                     var oid = offerIdsFiltered.get(0);
                     assertThat(oid).isNotNull();
@@ -262,18 +264,20 @@ public class TransferEndToEndTest {
 
                     var offerIdsFiltered = jo.stream().map(jv -> {
 
-                        var expanded = jsonLd.expand(jv.asJsonObject()).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
-                        var cat = transformerRegistry.transform(expanded, Catalog.class).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
-                        return cat.getDatasets().stream().filter(ds -> ds instanceof Catalog) // filter for CatalogAssets
-                                .map(ds -> (Catalog) ds)
-                                .filter(sc -> sc.getDataServices().stream().anyMatch(dataService -> dataService.getEndpointUrl().contains("alice"))) // filter for assets from Alice
-                                .flatMap(c -> c.getDatasets().stream())
-                                .filter(dataset -> dataset.getId().equals("asset-3")) // filter for the asset we're allowed to negotiate
-                                .map(Dataset::getOffers)
-                                .map(offers -> offers.keySet().iterator().next())
-                                .findFirst()
-                                .orElse(null);
-                    }).toList();
+                                var expanded = jsonLd.expand(jv.asJsonObject()).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
+                                var cat = transformerRegistry.transform(expanded, Catalog.class).orElseThrow(f -> new AssertionError(f.getFailureDetail()));
+                                return cat.getDatasets().stream().filter(ds -> ds instanceof Catalog) // filter for CatalogAssets
+                                        .map(ds -> (Catalog) ds)
+                                        .filter(sc -> sc.getDataServices().stream().anyMatch(dataService -> dataService.getEndpointUrl().contains("alice"))) // filter for assets from Alice
+                                        .flatMap(c -> c.getDatasets().stream())
+                                        .filter(dataset -> dataset.getId().equals("asset-3")) // filter for the asset we're allowed to negotiate
+                                        .map(Dataset::getOffers)
+                                        .map(offers -> offers.keySet().iterator().next())
+                                        .findFirst()
+                                        .orElse(null);
+                            })
+                            .filter(Objects::nonNull)
+                            .toList();
                     assertThat(offerIdsFiltered).hasSize(1).doesNotContainNull();
                     var oid = offerIdsFiltered.get(0);
                     assertThat(oid).isNotNull();

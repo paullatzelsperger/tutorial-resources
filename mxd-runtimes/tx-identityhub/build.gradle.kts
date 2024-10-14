@@ -20,25 +20,15 @@ plugins {
 
 dependencies {
 
-    runtimeOnly(libs.bundles.identityhub)
-    runtimeOnly(libs.edc.api.observability)
-
+    // used for the runtime
+    runtimeOnly(libs.bom.ih.withsts)
+    runtimeOnly(libs.bom.ih.sql)
+    runtimeOnly(libs.bom.ih.sql.sts)
     runtimeOnly(libs.edc.vault.hashicorp)
-    runtimeOnly(libs.bundles.sql.ih)
 
-    runtimeOnly(libs.bundles.identity.api)
-
-    implementation(libs.bundles.did)
-    runtimeOnly(libs.bundles.connector)
-    runtimeOnly(libs.edc.ih.spi.store)
-    runtimeOnly(libs.edc.ih.lib.credentialquery)
-
-
-    runtimeOnly(libs.edc.sts.core)
-    runtimeOnly(libs.edc.sts)
-    runtimeOnly(libs.edc.sts.api)
-    runtimeOnly(libs.edc.sts.accountprovisioner)
-    runtimeOnly(libs.edc.sts.accountservice.local)
+    // used for custom extensions
+    implementation(libs.edc.core.connector)
+    implementation(libs.edc.ih.spi)
 
     testImplementation(libs.edc.lib.crypto)
     testImplementation(libs.edc.lib.keys)

@@ -1,4 +1,4 @@
-FROM eclipse-temurin:22.0.1_8-jre-alpine
+FROM eclipse-temurin:23_37-jre-alpine
 ARG JAR
 ARG OTEL_JAR
 ARG ADDITIONAL_FILES
@@ -24,12 +24,11 @@ COPY ${JAR} controlplane.jar
 COPY ${OTEL_JAR} opentelemetry-javaagent.jar
 COPY ${ADDITIONAL_FILES} ./
 
-# health check is handled by K8S
 HEALTHCHECK NONE
 
-CMD ["java", \
+ENTRYPOINT ["java", \
+     "-javaagent:/app/opentelemetry-javaagent.jar", \
      "-Dedc.fs.config=/app/configuration.properties", \
-     "-Djava.util.logging.config.file=/app/logging.properties", \
      "-Dotel.javaagent.configuration-file=/app/opentelemetry.properties", \
      "-Dotel.metrics.exporter=prometheus", \
      "-Dotel.exporter.prometheus.port=9090", \

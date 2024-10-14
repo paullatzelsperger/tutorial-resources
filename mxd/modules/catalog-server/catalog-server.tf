@@ -125,6 +125,8 @@ resource "kubernetes_config_map" "catalog-server-config" {
     WEB_HTTP_PROTOCOL_PATH          = "/api/dsp"
     WEB_HTTP_MANAGEMENT_PORT        = var.ports.management
     WEB_HTTP_MANAGEMENT_PATH        = "/api/management"
+    WEB_HTTP_CATALOG_PORT           = var.ports.catalog
+    WEB_HTTP_CATALOG_PATH           = "/api/catalog"
     EDC_DSP_CALLBACK_ADDRESS        = "http://${var.serviceName}:${var.ports.protocol}/api/dsp"
     EDC_IAM_STS_PRIVATEKEY_ALIAS    = "${var.participantId}#${var.aliases.sts-private-key}"
     EDC_IAM_STS_PUBLICKEY_ID        = "${var.participantId}#${var.aliases.sts-public-key-id}"

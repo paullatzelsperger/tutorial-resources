@@ -20,7 +20,7 @@ dependencies {
     testImplementation(libs.edc.junit)
     testImplementation(libs.edc.spi.catalog)
     testImplementation(libs.edc.lib.transform)
-    testImplementation(catalogLibs.fc.core)
+    testImplementation(catalogLibs.core.fc)
     testImplementation(libs.edc.lib.jsonld)
     testImplementation(libs.edc.controlplane.transform)
 
