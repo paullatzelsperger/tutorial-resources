@@ -51,13 +51,19 @@ edc-lib-keys = { module = "org.eclipse.edc:keys-lib", version.ref = "edc" }
 edc-lib-transform = { module = "org.eclipse.edc:transform-lib", version.ref = "edc" }
 edc-lib-jsonld = { module = "org.eclipse.edc:json-ld-lib", version.ref = "edc" }
 
-# identith-hub SPI modules
+# identith-hub modules
 edc-ih-spi = { module = "org.eclipse.edc:identity-hub-spi", version.ref = "edc" }
+edc-ih-account-remote = { module = "org.eclipse.edc:sts-account-service-remote", version.ref = "edc" }
 
 # identity hub BOM modules
 bom-ih-withsts = { module = "org.eclipse.edc:identityhub-with-sts-bom", version.ref = "edc" }
+bom-ih = { module = "org.eclipse.edc:identityhub-bom", version.ref = "edc" }
 bom-ih-sql = { module = "org.eclipse.edc:identityhub-feature-sql-bom", version.ref = "edc" }
 bom-ih-sql-sts = { module = "org.eclipse.edc:identityhub-feature-sql-sts-bom", version.ref = "edc" }
+
+# STS modules
+edc-sql-sts-store = { module = "org.eclipse.edc:sts-client-store-sql", version.ref = "edc" }
+bom-sts = { module = "org.eclipse.edc:sts-feature-bom", version.ref = "edc" }
 
 # Tractus-X Runtime BOMs
 edc-tx-controlplane = { module = "org.eclipse.tractusx.edc:edc-controlplane-postgresql-hashicorp-vault", version.ref = "tractusx" }
@@ -76,6 +82,7 @@ testcontainers-postgres = { module = "org.testcontainers:postgresql", version.re
 
 [bundles]
 connector = ["edc-boot", "edc-core-connector", "edc-ext-http", "edc-api-observability", "edc-ext-jsonld"]
+sql-sts = [ "edc-sql-sts-store", "edc-sql-core", "edc-sql-pool", "edc-sql-transactionlocal", "postgres"]
 
 
 [plugins]

@@ -40,10 +40,9 @@ controlplane:
   endpoints:
     management:
       authKey: password
+# uncomment the following lines if a custom tx-control-plane runtime images should be used.
   image:
-    repository: "tx-control-plane"
-    tag: "latest"
-    pullPolicy: Never
+    pullPolicy: Always
 
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O

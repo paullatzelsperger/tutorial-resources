@@ -26,7 +26,7 @@ module "alice-connector" {
   }
   dcp-config = {
     id                     = var.alice-did
-    sts_token_url          = "http://${var.alice-identityhub-host}:7084/api/credentials/token"
+    sts_token_url          = local.sts-token-url
     sts_client_id          = var.alice-did
     sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
@@ -61,8 +61,25 @@ module "alice-identityhub" {
   humanReadableName = var.alice-identityhub-host
   namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-did
-  vault-url         = "http://alice-vault:8200"
+  vault-url         = local.vault-url
   url-path          = var.alice-identityhub-host
+  sts_token_url     = local.sts-token-url
+  sts_accounts_url  = local.sts-accounts-url
+  image             = "tx-identityhub:latest" # the one without the STS, which is deployed standalone
+}
+
+module "alice-sts" {
+  source            = "./modules/sts"
+  humanReadableName = "alice-sts"
+  accounts-api-key  = "password"
+  namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
+  vault-url         = local.vault-url
+
+  database = {
+    user     = local.databases.alice.database-username
+    password = local.databases.alice.database-password
+    url      = "jdbc:postgresql://${local.alice-postgres.database-host}/${local.databases.alice.database-name}"
+  }
 }
 
 # alice's catalog server
@@ -74,7 +91,7 @@ module "alice-catalog-server" {
   serviceName       = var.alice-catalogserver-host
   namespace         = kubernetes_namespace.mxd-ns.metadata.0.name
   participantId     = var.alice-bpn
-  vault-url         = "http://alice-vault:8200"
+  vault-url         = local.vault-url
   bdrs-url          = "http://bdrs-server:8082/api/directory"
   database = {
     user     = local.databases.alice-catalogserver.database-username
@@ -83,11 +100,12 @@ module "alice-catalog-server" {
   }
   dcp-config = {
     id                     = var.alice-did
-    sts_token_url          = "http://${var.alice-identityhub-host}:7084/api/credentials/token"
+    sts_token_url          = local.sts-accounts-url
     sts_client_id          = var.alice-did
     sts_clientsecret_alias = "participant-alice-sts-client-secret"
   }
 }
+
 
 module "alice-minio" {
   source            = "./modules/minio"
@@ -98,4 +116,7 @@ module "alice-minio" {
 
 locals {
   alice-azure-key-base64 = base64encode(var.alice-azure-account-key)
+  sts-accounts-url       = module.alice-sts.account-url
+  sts-token-url          = module.alice-sts.token-url
+  vault-url              = "http://alice-vault:8200"
 }

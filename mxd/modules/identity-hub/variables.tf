@@ -98,3 +98,24 @@ variable "database" {
     password = string
   })
 }
+
+variable "image" {
+  type    = string
+  default = "tx-identityhub-sts:latest"
+}
+
+variable "sts_token_url" {
+  default = ""
+  type    = string
+}
+
+variable "sts_accounts_url" {
+  default = ""
+  type    = string
+}
+
+variable "sts_accounts_api_key" {
+  type        = string
+  default     = "password"
+  description = "API Key for the STS Accounts API of a standalone STS"
+}

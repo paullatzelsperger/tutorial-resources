@@ -20,7 +20,7 @@ RUN adduser \
 USER "$APP_USER"
 WORKDIR /app
 
-COPY ${JAR} controlplane.jar
+COPY ${JAR} sts.jar
 COPY ${OTEL_JAR} opentelemetry-javaagent.jar
 COPY ${ADDITIONAL_FILES} ./
 
@@ -34,4 +34,4 @@ ENTRYPOINT ["java", \
      "-Dotel.exporter.prometheus.port=9090", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \
-     "controlplane.jar"]
+     "sts.jar"]

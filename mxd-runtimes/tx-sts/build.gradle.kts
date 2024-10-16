@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ *  Copyright (c) 2024 Metaform Systems, Inc.
  *
  *  This program and the accompanying materials are made available under the
  *  terms of the Apache License, Version 2.0 which is available at
@@ -8,7 +8,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *
  *  Contributors:
- *       Bayerische Motoren Werke Aktiengesellschaft (BMW AG) - initial API and implementation
+ *       Metaform Systems, Inc. - initial API and implementation
  *
  */
 
@@ -18,28 +18,23 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+
 dependencies {
-
-    // used for the runtime
-    runtimeOnly(libs.bom.ih)
-    runtimeOnly(libs.bom.ih.sql)
-    runtimeOnly(libs.edc.ih.account.remote)
+    runtimeOnly(libs.bom.sts)
     runtimeOnly(libs.edc.vault.hashicorp)
-
-    // used for custom extensions
-    implementation(libs.edc.core.connector)
-    implementation(libs.edc.ih.spi)
-
-    testImplementation(libs.edc.lib.crypto)
-    testImplementation(libs.edc.lib.keys)
-    testImplementation(libs.edc.junit)
+    runtimeOnly(libs.bundles.sql.sts)
 }
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    exclude("**/pom.properties", "**/pom.xml")
     mergeServiceFiles()
     archiveFileName.set("${project.name}.jar")
 }
 
 application {
     mainClass.set("org.eclipse.edc.boot.system.runtime.BaseRuntime")
+}
+
+edcBuild {
+    publish.set(false)
 }

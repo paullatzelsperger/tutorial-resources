@@ -115,7 +115,6 @@ resource "kubernetes_config_map" "catalog-server-config" {
     namespace = var.namespace
   }
 
-  ## Create databases for keycloak and MIW, create users and assign privileges
   data = {
     EDC_IAM_ISSUER_ID               = var.dcp-config.id
     EDC_IAM_DID_WEB_USE_HTTPS       = false

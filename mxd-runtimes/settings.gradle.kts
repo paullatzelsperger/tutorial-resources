@@ -43,8 +43,9 @@ dependencyResolutionManagement {
 }
 
 include(":tx-identityhub")
-include(":tx-control-plane")
+include(":tx-identityhub-sts")
 include(":tx-catalog-server")
+include(":tx-sts")
 include(":data-service-api")
 include(":jwt-signer")
 include(":e2e-test")

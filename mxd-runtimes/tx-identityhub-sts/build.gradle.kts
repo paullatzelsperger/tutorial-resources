@@ -20,11 +20,18 @@ plugins {
 
 dependencies {
 
-    runtimeOnly(libs.edc.tx.controlplane)
-    implementation(libs.edc.spi.crawler)
-    implementation(catalogLibs.tx.dcp)
-    implementation(libs.edc.spi.identitytrust)
+    // used for the runtime
+    runtimeOnly(libs.bom.ih.withsts)
+    runtimeOnly(libs.bom.ih.sql)
+    runtimeOnly(libs.bom.ih.sql.sts)
+    runtimeOnly(libs.edc.vault.hashicorp)
 
+    // used for custom extensions
+    implementation(libs.edc.core.connector)
+    implementation(libs.edc.ih.spi)
+
+    testImplementation(libs.edc.lib.crypto)
+    testImplementation(libs.edc.lib.keys)
     testImplementation(libs.edc.junit)
 }
 
